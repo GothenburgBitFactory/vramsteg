@@ -1,0 +1,22 @@
+# Full progress bar
+START=$(./pb --now)
+./vramsteg --width=80 --label=label --min=1 --max=10 --current=1 --percentage --elapsed --estimate --start $START
+
+for i in 1 2 3 4 5 6 7 8 9 10
+do
+  sleep 1
+  ./vramsteg --width=80 --label=label --min=1 --max=10 --current=$i --percentage --elapsed --estimate --start $START
+done
+sleep 1
+
+./vramsteg --width=80 --label=label --min=1 --max=10 --current=10 --percentage --elapsed --estimate --start $START --remove
+
+
+# Simple progress bar
+for i in 1 2 3 4 5 6 7 8 9 10
+do
+  sleep 1
+  ./vramsteg --width=80 --label=label --min=1 --max=10 --current=$i --percentage
+done
+sleep 1
+
