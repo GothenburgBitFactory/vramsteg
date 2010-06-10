@@ -40,9 +40,25 @@ extern int optreset;
 ////////////////////////////////////////////////////////////////////////////////
 void showUsage ()
 {
-  std::cout << std::endl
-            << "Usage: vramsteg [options]" << std::endl
-            << std::endl
+  std::cout << "\n"
+            << "Usage: vramsteg [options]\n"
+            << "\n"
+            << "  -l, --label <value>         Progress bar label\n"
+            << "  -m, --min <value>           Equivalent to 0%\n"
+            << "  -x, --max <value>           Equivalent to 100%\n"
+            << "  -c, --current <value>       Current value of progress bar\n"
+            << "  -p, --percentage            Show percentage\n"
+            << "  -s, --start <value>         Start time epoch\n"
+            << "  -w, --width <value>         Width of progress bar, default 80\n"
+            << "  -n, --now                   Returns current time as epoch\n"
+            << "  -r, --remove                Removes the progress bar\n"
+            << "  -e, --elapsed               Show elapsed time (needs --start)\n"
+            << "  -t, --estimate              Show estimated remaining time (needs --start)\n"
+            << "  -d, --done <color>          Color of completed part\n"
+            << "  -a, --remaining <color>     Color of incomplete part\n"
+            << "  -v, --version               Show vramsteg version\n"
+            << "  -h, --help                  Show command options\n"
+            << "\n"
             << std::endl;
 
   exit (0);
@@ -52,7 +68,7 @@ void showUsage ()
 void showVersion ()
 {
   std::cout << "\n"
-            << "vramsteg 1.0\n"
+            << "\033[1mvramsteg 1.0\033[0m\n"
             << "Copyright (C) 2010 P. Beckingham, F. Hernandez.\n"
             << "\n"
             << "Vramsteg may be copied only under the terms of the GNU "
