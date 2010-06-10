@@ -29,6 +29,7 @@
 #define INCLUDED_PROGRESS
 
 #include <string>
+#include <time.h>
 
 class Progress
 {
@@ -37,17 +38,27 @@ public:
   Progress (const std::string&, int, int, int, bool = true, bool = true);
   ~Progress ();
 
+  void setStyle (const std::string&);
   void setLabel (const std::string&);
   void setWidth (int);
   void setMin (int);
   void setMax (int);
   void showPercentage (bool);
   void removeAfter (bool);
+  void setStart (time_t);
+  void showEstimate (bool);
+  void showElapsed (bool);
 
   void update (int);
   void done ();
 
 private:
+  std::string formatTime (time_t);
+
+  void renderStyleDefault ();
+
+private:
+  std::string style;
   std::string label;
   int width;
   int minimum;
@@ -55,6 +66,9 @@ private:
   int current;
   bool percentage;
   bool remove;
+  time_t start;
+  bool estimate;
+  bool elapsed;
 };
 
 #endif INCLUDED_PROGRESS

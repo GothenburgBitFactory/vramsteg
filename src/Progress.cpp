@@ -26,6 +26,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
+#include <sstream>
 #include <iomanip>
 #include <stdio.h>
 #include <unistd.h>
@@ -33,31 +34,45 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 Progress::Progress ()
-: label ("")
+: style ("")
+, label ("")
 , width (0)
 , minimum (0)
 , maximum (0)
-, current (0)
+, current (-1)
 , percentage (true)
 , remove (true)
+, start (0)
+, estimate (false)
+, elapsed (false)
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 Progress::Progress (const std::string& l, int w, int n, int x, bool p /* = true */, bool r /* = true */)
-: label (l)
+: style ("")
+, label (l)
 , width (w)
 , minimum (n)
 , maximum (x)
 , percentage (p)
 , remove (r)
+, start (0)
+, estimate (false)
+, elapsed (false)
 {
-  current = minimum;
+  current = -1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 Progress::~Progress ()
 {
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void Progress::setStyle (const std::string& value)
+{
+  style = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -97,48 +112,38 @@ void Progress::removeAfter (bool value)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+void Progress::setStart (time_t value)
+{
+  start = value;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void Progress::showEstimate (bool value)
+{
+  estimate = value;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void Progress::showElapsed (bool value)
+{
+  elapsed = value;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 void Progress::update (int value)
 {
   if (isatty (fileno (stdout)) && current != value)
   {
-    int bar = width
-            - (label.length () ? label.length () + 1 : 0)
-            - (percentage ? 5 : 0);
+    // Box the range.
+    if (value < minimum) value = minimum;
+    if (value > maximum) value = maximum;
 
-    if (bar < 1)
-      throw std::string ("Progress: specified width is insufficient.");
-
+    // Current value.
     current = value;
-    float fraction = 1.0 * (current - minimum + 1) / (maximum - minimum + 1);
-    int visible = (int) (fraction * bar);
 
-    if (label.length ())
-      std::cout << label
-                << ' ';
-
-    if (visible > 0)
-      std::cout << "\033[42m" // Green
-                << std::setfill (' ')
-                << std::setw (visible)
-                << ' ';
-
-    if (bar - visible > 0)
-      std::cout << "\033[41m" // Red
-                << std::setfill (' ')
-                << std::setw (bar - visible)
-                << ' ';
-
-    std::cout << "\033[0m";
-
-    if (percentage)
-      std::cout << " "
-                << std::setfill (' ')
-                << std::setw (3)
-                << (int) (fraction * 100)
-                << "%";
-
-    std::cout << "\r"
-              << std::flush;
+    // Capable of supporting multiple styles.
+    if (style == "")
+      renderStyleDefault ();
   }
 }
 
@@ -147,14 +152,114 @@ void Progress::done ()
 {
   if (isatty (fileno (stdout)))
   {
-      if (remove)
-        std::cout << "\r"
-                  << std::setfill (' ')
-                  << std::setw (width)
-                  << ' ';
+    if (remove)
+      std::cout << "\r"
+                << std::setfill (' ')
+                << std::setw (width)
+                << ' ';
 
     std::cout << std::endl;
   }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string Progress::formatTime (time_t t)
+{
+  char buffer [128];
+
+  int days    =  t          / 86400;
+  int hours   = (t % 86400) / 3600;
+  int minutes = (t %  3600) / 60;
+  int seconds =  t % 60;
+
+  if (days)
+    snprintf (buffer, 128, "%dd %d:%02d:%02d", days, hours, minutes, seconds);
+  else if (hours)
+    snprintf (buffer, 128,     "%d:%02d:%02d",       hours, minutes, seconds);
+  else
+    snprintf (buffer, 128,        "%02d:%02d",              minutes, seconds);
+
+  return std::string (buffer);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Default style looks like this:
+//
+// label XXXXXXXX_________________  34% 0:12 0:35
+//
+// ^^^^^                                            Label string
+//       ^^^^^^^^                                   Completed bar
+//               ^^^^^^^^^^^^^^^^^                  Incomplete bar
+//                                 ^^^^             Percentage complete
+//                                      ^^^^        Elapsed time
+//                                           ^^^^   Remaining estimate
+void Progress::renderStyleDefault ()
+{
+  // Fraction completed.
+  float fraction = (1.0 * (current - minimum)) / (maximum - minimum);
+
+  // Elapsed time.
+  time_t now = time (NULL);
+  std::string elapsed_time;
+  if (elapsed && start != 0)
+    elapsed_time = formatTime (now - start);
+
+  // Estimated remaining time.
+  std::string estimate_time;
+  if (estimate && start != 0)
+    if (fraction >= 1e-6)
+      estimate_time = formatTime ((time_t) (int) (((now - start) * (1.0 - fraction)) / fraction));
+    else
+      estimate_time = formatTime (0);
+
+  // Calculate bar width.
+  int bar = width
+          - (label.length () ? label.length () + 1         : 0)
+          - (percentage      ? 5                           : 0)
+          - (elapsed         ? elapsed_time.length () + 1  : 0)
+          - (estimate        ? estimate_time.length () + 1 : 0);
+
+  if (bar < 1)
+    throw std::string ("Progress: specified width is insufficient.");
+
+  int visible = (int) (fraction * bar);
+
+  // Render.
+  if (label.length ())
+    std::cout << label
+              << ' ';
+
+  if (visible > 0)
+    std::cout << "\033[42m" // Green
+              << std::setfill (' ')
+              << std::setw (visible)
+              << ' ';
+
+  if (bar - visible > 0)
+    std::cout << "\033[41m" // Red
+              << std::setfill (' ')
+              << std::setw (bar - visible)
+              << ' ';
+
+  std::cout << "\033[0m";
+
+  if (percentage)
+    std::cout << " "
+              << std::setfill (' ')
+              << std::setw (3)
+              << (int) (fraction * 100)
+              << "%";
+
+  if (elapsed && start != 0)
+    std::cout << " "
+              << elapsed_time;
+
+  if (estimate && start != 0)
+    std::cout << " "
+              << estimate_time;
+
+  std::cout << "\r"
+            << std::flush;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
