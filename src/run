@@ -1,22 +1,20 @@
 # Full progress bar
 START=$(./vramsteg --now)
-./vramsteg --width=80 --label=label --min=1 --max=10 --current=1 --percentage --elapsed --estimate --start $START
 
-for i in {1..10}
+for i in {0..10}
 do
+  ./vramsteg --width=80 --label=label --min=0 --max=10 --current=$i --percentage --elapsed --estimate --start $START
   sleep 1
-  ./vramsteg --width=80 --label=label --min=1 --max=10 --current=$i --percentage --elapsed --estimate --start $START
 done
-sleep 1
 
-./vramsteg --width=80 --label=label --min=1 --max=10 --current=10 --percentage --elapsed --estimate --start $START --remove
+./vramsteg --width=80 --label=label --min=0 --max=10 --current=10 --percentage --elapsed --estimate --start $START --remove
 
 
 # Simple progress bar
-for i in {1..10}
+for i in {0..10}
 do
+  ./vramsteg --width=80 --label=label --min=0 --max=10 --current=$i --percentage
   sleep 1
-  ./vramsteg --width=80 --label=label --min=1 --max=10 --current=$i --percentage
 done
 echo
 
