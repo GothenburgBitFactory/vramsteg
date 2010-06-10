@@ -25,63 +25,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-// TODO Simple test program.  Will be replaced by new main function below.
-
-#include <unistd.h>
-#include <Progress.h>
-
-int main (int argc, char** argv)
-{
-  // One
-  Progress p1 ("label", 80, 1, 100, true, true);
-
-  for (int i = 1; i <= 100; ++i)
-  {
-    p1.update (i);
-    usleep (100000);
-  }
-
-  usleep (1000000);
-  p1.done ();
-
-  // Two
-  Progress p2;
-  p2.setLabel ("");
-  p2.setWidth (80);
-  p2.setMin (101);
-  p2.setMax (201);
-  p2.removeAfter (false);
-
-  for (int i = 101; i <= 201; ++i)
-  {
-    p2.update (i);
-    usleep (100000);
-  }
-
-  usleep (1000000);
-  p2.done ();
-
-  // Three
-  Progress p3 ("label", 80, 1, 100);
-
-  for (int i = 1; i <= 100; ++i)
-  {
-    p3.update (i);
-    usleep (100000);
-  }
-
-  usleep (1000000);
-  p3.done ();
-
-  return 0;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-#ifdef NOT_YET
-
 #include <iostream>
 #include <getopt.h>
+#include <unistd.h>
+#include <time.h>
 #include <Progress.h>
 
 extern char *optarg;
@@ -90,106 +37,116 @@ extern int optopt;
 extern int opterr;
 extern int optreset;
 
+////////////////////////////////////////////////////////////////////////////////
+void showUsage ()
+{
+  std::cout << std::endl
+            << "Usage: vramsteg [options]" << std::endl
+            << std::endl
+            << std::endl;
+
+  exit (0);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void showVersion ()
+{
+  std::cout << "\n"
+            << "vramsteg 1.0\n"
+            << "Copyright (C) 2010 P. Beckingham, F. Hernandez.\n"
+            << "\n"
+            << "Vramsteg may be copied only under the terms of the GNU "
+            << "General Public License, which may be found in the task "
+            << "source kit.\n"
+            << "\n"
+            << "Documentation for vramsteg can be found using 'man vramsteg', "
+            << " or at http://vitapi.org\n\n"
+            << std::flush;
+
+  exit (0);
+}
+
+////////////////////////////////////////////////////////////////////////////////
 int main (int argc, char** argv)
 {
-  // TODO Process command line.
-/*
-  pb --min n
-     --max x
-     --width w
-     --current c
-     --label l
-     --percentage
-     --start s
-     --elapsed
-     --estimate
-     --done color-done
-     --remaining color-remaining
-     --now
-*/
-
-
-  int percentage = 0;
-  int elapsed = 0;
-  int estimate = 0;
-  int remove = 0;
-  int now = 0;
+  int         arg_current    = 0;
+  std::string arg_done       = "";    // TODO Needs a color.
+  bool        arg_elapsed    = false;
+  bool        arg_estimate   = false;
+  std::string arg_label;
+  int         arg_max        = 0;
+  int         arg_min        = 0;
+  bool        arg_percentage = false;
+  std::string arg_remaining  = "";    // TODO Needs a color.
+  bool        arg_remove     = false;
+  int         arg_start      = 0;
+  int         arg_width      = 80;    // TODO Default to terminal width.
 
   static struct option longopts[] = {
-    { "min",        required_argument,      NULL,           'm' },
-    { "max",        required_argument,      NULL,           'x' },
-    { "width",      required_argument,      NULL,           'w' },
-    { "current",    required_argument,      NULL,           'c' },
-    { "label",      required_argument,      NULL,           'l' },
-    { "percentage", no_argument,            &percentage,    'p' },
-    { "elapsed",    no_argument,            &elapsed,       'e' },
-    { "estimate",   no_argument,            &estimate,      't' },
-    { "remove",     no_argument,            &remove,        'r' },
-    { "now",        no_argument,            &now,           'n' },
-    { "done",       required_argument,      NULL,           'd' },
-    { "remaining",  required_argument,      NULL,           'a' },
-    { "start",      required_argument,      NULL,           's' },
-    { NULL,         0,                      NULL,           0   }
+    { "current",    required_argument, NULL, 'c' },
+    { "done",       required_argument, NULL, 'd' },
+    { "elapsed",    no_argument,       NULL, 'e' },
+    { "estimate",   no_argument,       NULL, 't' },
+    { "label",      required_argument, NULL, 'l' },
+    { "max",        required_argument, NULL, 'x' },
+    { "min",        required_argument, NULL, 'm' },
+    { "now",        no_argument,       NULL, 'n' },
+    { "percentage", no_argument,       NULL, 'p' },
+    { "remaining",  required_argument, NULL, 'a' },
+    { "remove",     no_argument,       NULL, 'r' },
+    { "start",      required_argument, NULL, 's' },
+    { "version",    no_argument,       NULL, 'v' },
+    { "width",      required_argument, NULL, 'w' },
+    { "help",       no_argument,       NULL, 'h' },
+    { NULL,         0,                 NULL, 0   }
   };
 
   int ch;
-  while ((ch = getopt_long (argc, argv, "mxwclpetrsdna:", longopts, NULL)) != -1)
+  while ((ch = getopt_long (argc, argv, "c:d:etl:x:m:npa:rs:vw:h", longopts, NULL)) != -1)
   {
     switch (ch)
     {
-    case 'm':      std::cout << "m" << std::endl; break;
-    case 'x':      std::cout << "x" << std::endl; break;
-    case 'w':      std::cout << "w" << std::endl; break;
-    case 'c':      std::cout << "c" << std::endl; break;
-    case 'l':      std::cout << "l" << std::endl; break;
-    case 'p':      std::cout << "p" << std::endl; break;
-    case 'e':      std::cout << "e" << std::endl; break;
-    case 't':      std::cout << "t" << std::endl; break;
-    case 's':      std::cout << "s" << std::endl; break;
-    case 'd':      std::cout << "d" << std::endl; break;
-
-    // TODO remove bar.
-    case 'r':      std::cout << "r" << std::endl; break;
-
-    // TODO immediately display time() to STDOUT.
-    case 'n':      std::cout << "n" << std::endl; break;
-
-    case 'a':      std::cout << "a" << std::endl; break;
-    default:       std::cout << "usage!" << std::endl; break;
-/*
-    From "man getopt_long":
-
-    case 'b':
-      bflag = 1;
-      break;
-
-    case 'f':
-      if ((fd = open(optarg, O_RDONLY, 0)) == -1)
-        err(1, "unable to open %s", optarg);
-      break;
-
-    case 0:
-      if (daggerset)
-        fprintf (stderr, "Buffy will use her dagger to apply fluoride to dracula's teeth\n");
-      break;
+    case 'c': arg_current    = atoi (optarg);        break;
+    case 'd': arg_done       = optarg;               break;
+    case 'e': arg_elapsed    = true;                 break;
+    case 't': arg_estimate   = true;                 break;
+    case 'l': arg_label      = optarg;               break;
+    case 'x': arg_max        = atoi (optarg);        break;
+    case 'm': arg_min        = atoi (optarg);        break;
+    case 'n': std::cout << time (NULL) << std::endl; exit (0);
+    case 'p': arg_percentage = true;                 break;
+    case 'a': arg_remaining  = optarg;               break;
+    case 'r': arg_remove     = true;                 break;
+    case 's': arg_start      = atoi (optarg);        break;
+    case 'v': showVersion ();                        break;
+    case 'w': arg_width      = atoi (optarg);        break;
+    case 'h': showUsage ();                          break;
 
     default:
-      usage ();
-*/
+      std::cout << "<default>" << std::endl;
+      break;
     }
   }
 
   argc -= optind;
   argv += optind;
 
+  // TODO Sanity check arguments.
 
-  // TODO Set up Progress object.
+  // TODO Sanity check all values.
+  // TODO min < max
+  // TODO min <= current <= max
+  // TODO width > label.length + percentage.length + estimate.length + elapsed.length
 
-  // TODO Render Progress bar.
+  // Set up and render Progress object.
+  Progress p (arg_label, arg_width, arg_min, arg_max, arg_percentage, arg_remove);
+  p.update (arg_current);
+
+  if (arg_remove)
+    p.done ();
 
   return 0;
 }
 
-#endif
-
 ////////////////////////////////////////////////////////////////////////////////
+

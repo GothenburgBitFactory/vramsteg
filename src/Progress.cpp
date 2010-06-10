@@ -112,15 +112,6 @@ void Progress::update (int value)
     float fraction = 1.0 * (current - minimum + 1) / (maximum - minimum + 1);
     int visible = (int) (fraction * bar);
 
-/*
-    std::cout << "w" << width
-              << " l" << label.length ()
-              << " b" << bar
-              << " f" << fraction
-              << " v" << visible
-              << std::endl;
-*/
-
     if (label.length ())
       std::cout << label
                 << ' ';
@@ -151,6 +142,7 @@ void Progress::update (int value)
   }
 }
 
+////////////////////////////////////////////////////////////////////////////////
 void Progress::done ()
 {
   if (isatty (fileno (stdout)))
