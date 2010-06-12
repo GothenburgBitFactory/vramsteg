@@ -55,8 +55,10 @@ void showUsage ()
             << "  -r, --remove                Removes the progress bar\n"
             << "  -e, --elapsed               Show elapsed time (needs --start)\n"
             << "  -t, --estimate              Show estimated remaining time (needs --start)\n"
-//            << "  -d, --done <color>          Color of completed part\n"
-//            << "  -a, --remaining <color>     Color of incomplete part\n"
+#ifdef WAITING_FOR_VITAPI
+            << "  -d, --done <color>          Color of completed part\n"
+            << "  -a, --remaining <color>     Color of incomplete part\n"
+#endif
             << "  -v, --version               Show vramsteg version\n"
             << "  -h, --help                  Show command options\n"
             << std::endl;
@@ -68,7 +70,7 @@ void showUsage ()
 void showVersion ()
 {
   std::cout << "\n"
-            << "\033[1mvramsteg 1.0\033[0m\n"
+            << "\033[1m" << "vramsteg 1.0" << "\033[0m\n"
             << "Copyright (C) 2010 P. Beckingham, F. Hernandez.\n"
             << "\n"
             << "Vramsteg may be copied only under the terms of the GNU "
@@ -88,14 +90,18 @@ int main (int argc, char** argv)
   try
   {
     int         arg_current    = 0;
-//    std::string arg_done       = "";
+#ifdef WAITING_FOR_VITAPI
+    std::string arg_done       = "";
+#endif
     bool        arg_elapsed    = false;
     bool        arg_estimate   = false;
     std::string arg_label;
     int         arg_max        = 0;
     int         arg_min        = 0;
     bool        arg_percentage = false;
-//    std::string arg_remaining  = "";
+#ifdef WAITING_FOR_VITAPI
+    std::string arg_remaining  = "";
+#endif
     bool        arg_remove     = false;
     time_t      arg_start      = 0;
     int         arg_width      = 80;
@@ -103,7 +109,9 @@ int main (int argc, char** argv)
 
     static struct option longopts[] = {
       { "current",    required_argument, NULL, 'c' },
-//      { "done",       required_argument, NULL, 'd' },
+#ifdef WAITING_FOR_VITAPI
+      { "done",       required_argument, NULL, 'd' },
+#endif
       { "elapsed",    no_argument,       NULL, 'e' },
       { "estimate",   no_argument,       NULL, 't' },
       { "label",      required_argument, NULL, 'l' },
@@ -111,7 +119,9 @@ int main (int argc, char** argv)
       { "min",        required_argument, NULL, 'm' },
       { "now",        no_argument,       NULL, 'n' },
       { "percentage", no_argument,       NULL, 'p' },
-//      { "remaining",  required_argument, NULL, 'a' },
+#ifdef WAITING_FOR_VITAPI
+      { "remaining",  required_argument, NULL, 'a' },
+#endif
       { "remove",     no_argument,       NULL, 'r' },
       { "start",      required_argument, NULL, 's' },
       { "version",    no_argument,       NULL, 'v' },
@@ -122,13 +132,18 @@ int main (int argc, char** argv)
     };
 
     int ch;
-//    while ((ch = getopt_long (argc, argv, "c:d:etl:x:m:npa:rs:vw:h", longopts, NULL)) != -1)
+#ifdef WAITING_FOR_VITAPI
+    while ((ch = getopt_long (argc, argv, "c:d:etl:x:m:npa:rs:vw:h", longopts, NULL)) != -1)
+#else
     while ((ch = getopt_long (argc, argv, "c:etl:x:m:nprs:vw:h", longopts, NULL)) != -1)
+#endif
     {
       switch (ch)
       {
       case 'c': arg_current    = atoi (optarg);        break;
-//      case 'd': arg_done       = optarg;               break;
+#ifdef WAITING_FOR_VITAPI
+      case 'd': arg_done       = optarg;               break;
+#endif
       case 'e': arg_elapsed    = true;                 break;
       case 't': arg_estimate   = true;                 break;
       case 'l': arg_label      = optarg;               break;
@@ -136,7 +151,9 @@ int main (int argc, char** argv)
       case 'm': arg_min        = atoi (optarg);        break;
       case 'n': std::cout << time (NULL) << std::endl; exit (0);
       case 'p': arg_percentage = true;                 break;
-//      case 'a': arg_remaining  = optarg;               break;
+#ifdef WAITING_FOR_VITAPI
+      case 'a': arg_remaining  = optarg;               break;
+#endif
       case 'r': arg_remove     = true;                 break;
       case 's': arg_start      = atoi (optarg);        break;
       case 'v': showVersion ();                        break;
@@ -175,6 +192,7 @@ int main (int argc, char** argv)
     if (arg_estimate && arg_start == 0)
       throw std::string ("To use the --estimate feature, --start must be provided.");
 
+    // Disallow signals from stopping the program while it is displaying color codes
     // Set up and render Progress object.
     Progress p (arg_label, arg_width, arg_min, arg_max, arg_percentage, arg_remove);
     p.setStyle (arg_style);
