@@ -59,7 +59,6 @@ void showUsage ()
             << "  -a, --remaining <color>     Color of incomplete part\n"
             << "  -v, --version               Show vramsteg version\n"
             << "  -h, --help                  Show command options\n"
-            << "\n"
             << std::endl;
 
   exit (0);
@@ -153,13 +152,27 @@ int main (int argc, char** argv)
     argc -= optind;
     argv += optind;
 
-    // TODO Sanity check arguments.
+    // Sanity check arguments.
+    if (arg_min || arg_max)
+      if (arg_min > arg_max)
+        throw std::string ("The --max value must not be less than the --min value.");
 
-    // TODO Sanity check all values.
-    // TODO min < max
-    // TODO min <= current <= max
-    // TODO width > label.length + percentage.length + estimate.length + elapsed.length
-    // TODO Valid arg_style
+    if (arg_min || arg_max || arg_current)
+      if (arg_min > arg_current || arg_current > arg_max)
+        throw std::string ("The --current value must not lie outside the --min/--max range.");
+
+    if (arg_width && arg_label.length ())
+      if (arg_label.length () >= arg_width)
+        throw std::string ("The --label string is longer than the allowed --width value.");
+
+    if (! arg_remove && ! (arg_min || arg_current || arg_max))
+      showUsage ();
+
+    if (arg_elapsed && arg_start == 0)
+      throw std::string ("To use the --elapsed feature, --start must be provided.");
+
+    if (arg_estimate && arg_start == 0)
+      throw std::string ("To use the --estimate feature, --start must be provided.");
 
     // Set up and render Progress object.
     Progress p (arg_label, arg_width, arg_min, arg_max, arg_percentage, arg_remove);
@@ -174,7 +187,7 @@ int main (int argc, char** argv)
       p.done ();
   }
 
-  catch (const std::string& e) { std::cerr << e << std::endl; }
+  catch (const std::string& e) { std::cerr << "Error: " << e << std::endl; }
   catch (...)                  { std::cerr << "Unknown error occurred - please report." << std::endl; }
 
   return 0;

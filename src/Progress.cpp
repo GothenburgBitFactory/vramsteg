@@ -144,6 +144,8 @@ void Progress::update (int value)
     // Capable of supporting multiple styles.
     if (style == "")
       renderStyleDefault ();
+    else
+      throw std::string ("Style '") + style + "' not supported.";
   }
 }
 
@@ -220,7 +222,7 @@ void Progress::renderStyleDefault ()
           - (estimate        ? estimate_time.length () + 1 : 0);
 
   if (bar < 1)
-    throw std::string ("Progress: specified width is insufficient.");
+    throw std::string ("The specified width is insufficient.");
 
   int visible = (int) (fraction * bar);
 
