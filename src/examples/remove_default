@@ -15,5 +15,5 @@ do
   sleep 1
 done
 
-../vramsteg --min=0 --max=10 --current=10 --remove
+../vramsteg --remove
 

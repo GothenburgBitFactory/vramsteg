@@ -16,5 +16,5 @@ do
   sleep 1
 done
 
-../vramsteg --width=80 --label=label --min=1 --max=10 --current=10 --percentage --elapsed --estimate --start $START --remove
+../vramsteg --width=80 --remove
 
