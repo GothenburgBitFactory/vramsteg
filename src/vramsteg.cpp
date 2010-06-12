@@ -29,6 +29,7 @@
 #include <getopt.h>
 #include <unistd.h>
 #include <time.h>
+#include <signal.h>
 #include <Progress.h>
 
 extern char *optarg;
@@ -89,6 +90,16 @@ int main (int argc, char** argv)
 {
   try
   {
+    // We don't want any signals causing the program to quit in mid output, as
+    // this would lead to odd colors persisting in the terminal.
+    signal (SIGHUP,    SIG_IGN);
+    signal (SIGINT,    SIG_IGN);
+    signal (SIGKILL,   SIG_IGN);
+    signal (SIGPIPE,   SIG_IGN);
+    signal (SIGTERM,   SIG_IGN);
+    signal (SIGUSR1,   SIG_IGN);
+    signal (SIGUSR2,   SIG_IGN);
+
     int         arg_current    = 0;
 #ifdef WAITING_FOR_VITAPI
     std::string arg_done       = "";
