@@ -1,0 +1,56 @@
+echo You are watching an automated vramsteg demo.  Vramsteg is an
+echo open source standalone progress bar utility for use by anything
+echo that runs at the command line.
+echo 
+sleep 3
+
+echo Here is a simple example:
+for i in {0..6}
+do
+  ../src/vramsteg --width 60 --style text --min 0 --max 6 --current $i
+  sleep 1
+done
+../src/vramsteg --width 60 --remove
+
+sleep 1
+echo Here is another that includes percentage completion, a label,
+echo and estimated remaining time:
+sleep 2
+START=$(../src/vramsteg --now)
+for i in {0..6}
+do
+  ../src/vramsteg --width 60 --style text --min 0 --max 6 --current $i --label Demo --percentage --start $START --estimate
+  sleep 1
+done
+../src/vramsteg --width 60 --remove
+
+sleep 1
+echo Here is an example that uses a solid bar and elapsed time:
+sleep 2
+START=$(../src/vramsteg --now)
+for i in {0..6}
+do
+  ../src/vramsteg --width 60 --style mono --min 0 --max 6 --current $i --label Demo --percentage --start $START --elapsed
+  sleep 1
+done
+../src/vramsteg --width 60 --remove
+
+sleep 1
+echo Here is a more colorful version, uses less space, and is
+echo not removed from the screen after it is done:
+echo
+sleep 2
+START=$(../src/vramsteg --now)
+for i in {0..6}
+do
+  ../src/vramsteg --width 40 --min 0 --max 6 --current $i --label Demo --percentage --start $START --elapsed
+  sleep 1
+done
+echo
+echo
+sleep 1
+
+echo Thanks for watching
+echo http://vitapi.org
+sleep 1
+
