@@ -1,6 +1,6 @@
 #! /bin/bash
 
-echo Default style
+echo 'text' style
 echo Default colors
 echo Default width
 echo With percentage
