@@ -6,12 +6,12 @@ echo Default width
 echo No percentage
 echo No elapsed time
 echo No estimated remaining time
-echo No label
+echo With label
 echo No remove
 
 for i in {0..10}
 do
-  ../vramsteg --min 0 --max 10 --current $i
+  ../vramsteg --style text --label "Bar label" --min 0 --max 10 --current $i
   sleep 1
 done
 echo

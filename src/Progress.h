@@ -56,6 +56,7 @@ private:
   std::string formatTime (time_t);
 
   void renderStyleDefault ();
+  void renderStyleText ();
 
 private:
   std::string style;

@@ -12,7 +12,7 @@ echo No remove
 START=$(../vramsteg --now)
 for i in {0..10}
 do
-  ../vramsteg --min=0 --max=10 --current=$i --elapsed --start $START
+  ../vramsteg --min 0 --max 10 --current $i --elapsed --start $START
   sleep 1
 done
 echo

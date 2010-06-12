@@ -142,8 +142,8 @@ void Progress::update (int value)
     current = value;
 
     // Capable of supporting multiple styles.
-    if (style == "")
-      renderStyleDefault ();
+         if (style == "")     renderStyleDefault ();
+    else if (style == "text") renderStyleText ();
     else
       throw std::string ("Style '") + style + "' not supported.";
   }
@@ -244,6 +244,87 @@ void Progress::renderStyleDefault ()
               << ' ';
 
   std::cout << "\033[0m";
+
+  if (percentage)
+    std::cout << " "
+              << std::setfill (' ')
+              << std::setw (3)
+              << (int) (fraction * 100)
+              << "%";
+
+  if (elapsed && start != 0)
+    std::cout << " "
+              << elapsed_time;
+
+  if (estimate && start != 0)
+    std::cout << " "
+              << estimate_time;
+
+  std::cout << "\r"
+            << std::flush;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Text style looks like this:
+//
+// label [********                ]  34% 0:12 0:35
+//
+// ^^^^^                                             Label string
+//        ^^^^^^^^                                   Completed bar
+//               ^^^^^^^^^^^^^^^^^                   Incomplete bar
+//                                  ^^^^             Percentage complete
+//                                       ^^^^        Elapsed time
+//                                            ^^^^   Remaining estimate
+void Progress::renderStyleText ()
+{
+  // Fraction completed.
+  float fraction = (1.0 * (current - minimum)) / (maximum - minimum);
+
+  // Elapsed time.
+  time_t now = time (NULL);
+  std::string elapsed_time;
+  if (elapsed && start != 0)
+    elapsed_time = formatTime (now - start);
+
+  // Estimated remaining time.
+  std::string estimate_time;
+  if (estimate && start != 0)
+    if (fraction >= 1e-6)
+      estimate_time = formatTime ((time_t) (int) (((now - start) * (1.0 - fraction)) / fraction));
+    else
+      estimate_time = formatTime (0);
+
+  // Calculate bar width.
+  int bar = width
+          - 2                                                    // The [ and ]
+          - (label.length () ? label.length () + 1         : 0)
+          - (percentage      ? 5                           : 0)
+          - (elapsed         ? elapsed_time.length () + 1  : 0)
+          - (estimate        ? estimate_time.length () + 1 : 0);
+
+  if (bar < 1)
+    throw std::string ("The specified width is insufficient.");
+
+  int visible = (int) (fraction * bar);
+
+  // Render.
+  if (label.length ())
+    std::cout << label
+              << ' ';
+
+  std::cout << '[';
+
+  if (visible > 0)
+    std::cout << std::setfill ('*')
+              << std::setw (visible)
+              << '*';
+
+  if (bar - visible > 0)
+    std::cout << std::setfill (' ')
+              << std::setw (bar - visible)
+              << ' ';
+
+  std::cout << ']';
 
   if (percentage)
     std::cout << " "
