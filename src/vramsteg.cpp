@@ -26,6 +26,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
+#include <stdlib.h>
 #include <getopt.h>
 #include <unistd.h>
 #include <time.h>
