@@ -143,6 +143,7 @@ void Progress::update (int value)
 
     // Capable of supporting multiple styles.
          if (style == "")     renderStyleDefault ();
+    else if (style == "mono") renderStyleMono ();
     else if (style == "text") renderStyleText ();
     else
       throw std::string ("Style '") + style + "' not supported.";
@@ -187,11 +188,11 @@ std::string Progress::formatTime (time_t t)
 ////////////////////////////////////////////////////////////////////////////////
 // Default style looks like this:
 //
-// label XXXXXXXX_________________  34% 0:12 0:35
+// label GGGGGGGGRRRRRRRRRRRRRRRRR  34% 0:12 0:35
 //
 // ^^^^^                                            Label string
-//       ^^^^^^^^                                   Completed bar
-//               ^^^^^^^^^^^^^^^^^                  Incomplete bar
+//       ^^^^^^^^                                   Completed bar (in green)
+//               ^^^^^^^^^^^^^^^^^                  Incomplete bar (in red)
 //                                 ^^^^             Percentage complete
 //                                      ^^^^        Elapsed time
 //                                           ^^^^   Remaining estimate
@@ -239,6 +240,86 @@ void Progress::renderStyleDefault ()
 
   if (bar - visible > 0)
     std::cout << "\033[41m" // Red
+              << std::setfill (' ')
+              << std::setw (bar - visible)
+              << ' ';
+
+  std::cout << "\033[0m";
+
+  if (percentage)
+    std::cout << " "
+              << std::setfill (' ')
+              << std::setw (3)
+              << (int) (fraction * 100)
+              << "%";
+
+  if (elapsed && start != 0)
+    std::cout << " "
+              << elapsed_time;
+
+  if (estimate && start != 0)
+    std::cout << " "
+              << estimate_time;
+
+  std::cout << "\r"
+            << std::flush;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Mono style looks like this:
+//
+// label WWWWWWWWBBBBBBBBBBBBBBBBB  34% 0:12 0:35
+//
+// ^^^^^                                            Label string
+//       ^^^^^^^^                                   Completed bar (in white)
+//               ^^^^^^^^^^^^^^^^^                  Incomplete bar (in black)
+//                                 ^^^^             Percentage complete
+//                                      ^^^^        Elapsed time
+//                                           ^^^^   Remaining estimate
+void Progress::renderStyleMono ()
+{
+  // Fraction completed.
+  float fraction = (1.0 * (current - minimum)) / (maximum - minimum);
+
+  // Elapsed time.
+  time_t now = time (NULL);
+  std::string elapsed_time;
+  if (elapsed && start != 0)
+    elapsed_time = formatTime (now - start);
+
+  // Estimated remaining time.
+  std::string estimate_time;
+  if (estimate && start != 0)
+    if (fraction >= 1e-6)
+      estimate_time = formatTime ((time_t) (int) (((now - start) * (1.0 - fraction)) / fraction));
+    else
+      estimate_time = formatTime (0);
+
+  // Calculate bar width.
+  int bar = width
+          - (label.length () ? label.length () + 1         : 0)
+          - (percentage      ? 5                           : 0)
+          - (elapsed         ? elapsed_time.length () + 1  : 0)
+          - (estimate        ? estimate_time.length () + 1 : 0);
+
+  if (bar < 1)
+    throw std::string ("The specified width is insufficient.");
+
+  int visible = (int) (fraction * bar);
+
+  // Render.
+  if (label.length ())
+    std::cout << label
+              << ' ';
+
+  if (visible > 0)
+    std::cout << "\033[47m" // White
+              << std::setfill (' ')
+              << std::setw (visible)
+              << ' ';
+
+  if (bar - visible > 0)
+    std::cout << "\033[40m" // Black
               << std::setfill (' ')
               << std::setw (bar - visible)
               << ' ';

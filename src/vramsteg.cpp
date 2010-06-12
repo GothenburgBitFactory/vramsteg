@@ -38,7 +38,7 @@ extern int optopt;
 extern int opterr;
 extern int optreset;
 
-////////////////////////////////////////////////////////////////////////////////
+
 void showUsage ()
 {
   std::cout << "\n"
@@ -62,6 +62,11 @@ void showUsage ()
 #endif
             << "  -v, --version               Show vramsteg version\n"
             << "  -h, --help                  Show command options\n"
+            << "\n"
+            << "Supported styles are:\n"
+            << "  (default)     label \033[42m        \033[41m            \033[0m 40%\n"
+            << "  mono          label \033[47m    \033[40m                \033[0m 20%\n"
+            << "  text          label [************      ] 60%\n"
             << std::endl;
 
   exit (0);
