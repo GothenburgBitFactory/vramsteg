@@ -86,90 +86,96 @@ void showVersion ()
 ////////////////////////////////////////////////////////////////////////////////
 int main (int argc, char** argv)
 {
-  int         arg_current    = 0;
-  std::string arg_done       = "";    // TODO Needs a color.
-  bool        arg_elapsed    = false;
-  bool        arg_estimate   = false;
-  std::string arg_label;
-  int         arg_max        = 0;
-  int         arg_min        = 0;
-  bool        arg_percentage = false;
-  std::string arg_remaining  = "";    // TODO Needs a color.
-  bool        arg_remove     = false;
-  time_t      arg_start      = 0;
-  int         arg_width      = 80;    // TODO Default to terminal width.
-  std::string arg_style      = "";
-
-  static struct option longopts[] = {
-    { "current",    required_argument, NULL, 'c' },
-    { "done",       required_argument, NULL, 'd' },
-    { "elapsed",    no_argument,       NULL, 'e' },
-    { "estimate",   no_argument,       NULL, 't' },
-    { "label",      required_argument, NULL, 'l' },
-    { "max",        required_argument, NULL, 'x' },
-    { "min",        required_argument, NULL, 'm' },
-    { "now",        no_argument,       NULL, 'n' },
-    { "percentage", no_argument,       NULL, 'p' },
-    { "remaining",  required_argument, NULL, 'a' },
-    { "remove",     no_argument,       NULL, 'r' },
-    { "start",      required_argument, NULL, 's' },
-    { "version",    no_argument,       NULL, 'v' },
-    { "width",      required_argument, NULL, 'w' },
-    { "style",      required_argument, NULL, 'y' },
-    { "help",       no_argument,       NULL, 'h' },
-    { NULL,         0,                 NULL, 0   }
-  };
-
-  int ch;
-  while ((ch = getopt_long (argc, argv, "c:d:etl:x:m:npa:rs:vw:h", longopts, NULL)) != -1)
+  try
   {
-    switch (ch)
-    {
-    case 'c': arg_current    = atoi (optarg);        break;
-    case 'd': arg_done       = optarg;               break;
-    case 'e': arg_elapsed    = true;                 break;
-    case 't': arg_estimate   = true;                 break;
-    case 'l': arg_label      = optarg;               break;
-    case 'x': arg_max        = atoi (optarg);        break;
-    case 'm': arg_min        = atoi (optarg);        break;
-    case 'n': std::cout << time (NULL) << std::endl; exit (0);
-    case 'p': arg_percentage = true;                 break;
-    case 'a': arg_remaining  = optarg;               break;
-    case 'r': arg_remove     = true;                 break;
-    case 's': arg_start      = atoi (optarg);        break;
-    case 'v': showVersion ();                        break;
-    case 'w': arg_width      = atoi (optarg);        break;
-    case 'y': arg_style      = optarg;               break;
-    case 'h': showUsage ();                          break;
+    int         arg_current    = 0;
+    std::string arg_done       = "";    // TODO Needs a color.
+    bool        arg_elapsed    = false;
+    bool        arg_estimate   = false;
+    std::string arg_label;
+    int         arg_max        = 0;
+    int         arg_min        = 0;
+    bool        arg_percentage = false;
+    std::string arg_remaining  = "";    // TODO Needs a color.
+    bool        arg_remove     = false;
+    time_t      arg_start      = 0;
+    int         arg_width      = 80;    // TODO Default to terminal width.
+    std::string arg_style      = "";
 
-    default:
-      std::cout << "<default>" << std::endl;
-      break;
+    static struct option longopts[] = {
+      { "current",    required_argument, NULL, 'c' },
+      { "done",       required_argument, NULL, 'd' },
+      { "elapsed",    no_argument,       NULL, 'e' },
+      { "estimate",   no_argument,       NULL, 't' },
+      { "label",      required_argument, NULL, 'l' },
+      { "max",        required_argument, NULL, 'x' },
+      { "min",        required_argument, NULL, 'm' },
+      { "now",        no_argument,       NULL, 'n' },
+      { "percentage", no_argument,       NULL, 'p' },
+      { "remaining",  required_argument, NULL, 'a' },
+      { "remove",     no_argument,       NULL, 'r' },
+      { "start",      required_argument, NULL, 's' },
+      { "version",    no_argument,       NULL, 'v' },
+      { "width",      required_argument, NULL, 'w' },
+      { "style",      required_argument, NULL, 'y' },
+      { "help",       no_argument,       NULL, 'h' },
+      { NULL,         0,                 NULL, 0   }
+    };
+
+    int ch;
+    while ((ch = getopt_long (argc, argv, "c:d:etl:x:m:npa:rs:vw:h", longopts, NULL)) != -1)
+    {
+      switch (ch)
+      {
+      case 'c': arg_current    = atoi (optarg);        break;
+      case 'd': arg_done       = optarg;               break;
+      case 'e': arg_elapsed    = true;                 break;
+      case 't': arg_estimate   = true;                 break;
+      case 'l': arg_label      = optarg;               break;
+      case 'x': arg_max        = atoi (optarg);        break;
+      case 'm': arg_min        = atoi (optarg);        break;
+      case 'n': std::cout << time (NULL) << std::endl; exit (0);
+      case 'p': arg_percentage = true;                 break;
+      case 'a': arg_remaining  = optarg;               break;
+      case 'r': arg_remove     = true;                 break;
+      case 's': arg_start      = atoi (optarg);        break;
+      case 'v': showVersion ();                        break;
+      case 'w': arg_width      = atoi (optarg);        break;
+      case 'y': arg_style      = optarg;               break;
+      case 'h': showUsage ();                          break;
+
+      default:
+        std::cout << "<default>" << std::endl;
+        break;
+      }
     }
+
+    argc -= optind;
+    argv += optind;
+
+    // TODO Sanity check arguments.
+
+    // TODO Sanity check all values.
+    // TODO min < max
+    // TODO min <= current <= max
+    // TODO width > label.length + percentage.length + estimate.length + elapsed.length
+    // TODO Valid arg_style
+
+    // Set up and render Progress object.
+    Progress p (arg_label, arg_width, arg_min, arg_max, arg_percentage, arg_remove);
+    p.setStyle (arg_style);
+    p.setStart (arg_start);
+    p.showElapsed (arg_elapsed);
+    p.showEstimate (arg_estimate);
+    p.removeAfter (arg_remove);
+    p.update (arg_current);
+
+    if (arg_remove)
+      p.done ();
   }
 
-  argc -= optind;
-  argv += optind;
-
-  // TODO Sanity check arguments.
-
-  // TODO Sanity check all values.
-  // TODO min < max
-  // TODO min <= current <= max
-  // TODO width > label.length + percentage.length + estimate.length + elapsed.length
-  // TODO Valid arg_style
-
-  // Set up and render Progress object.
-  Progress p (arg_label, arg_width, arg_min, arg_max, arg_percentage, arg_remove);
-  p.setStyle (arg_style);
-  p.setStart (arg_start);
-  p.showElapsed (arg_elapsed);
-  p.showEstimate (arg_estimate);
-  p.removeAfter (arg_remove);
-  p.update (arg_current);
-
-  if (arg_remove)
-    p.done ();
+  catch (const std::string& e) { std::cerr << e << std::endl; }
+  catch (...)                  { std::cerr << "Unknown error occurred - please report." << std::endl; }
 
   return 0;
 }
