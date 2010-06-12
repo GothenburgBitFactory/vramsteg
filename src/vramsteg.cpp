@@ -55,8 +55,8 @@ void showUsage ()
             << "  -r, --remove                Removes the progress bar\n"
             << "  -e, --elapsed               Show elapsed time (needs --start)\n"
             << "  -t, --estimate              Show estimated remaining time (needs --start)\n"
-            << "  -d, --done <color>          Color of completed part\n"
-            << "  -a, --remaining <color>     Color of incomplete part\n"
+//            << "  -d, --done <color>          Color of completed part\n"
+//            << "  -a, --remaining <color>     Color of incomplete part\n"
             << "  -v, --version               Show vramsteg version\n"
             << "  -h, --help                  Show command options\n"
             << std::endl;
@@ -88,22 +88,22 @@ int main (int argc, char** argv)
   try
   {
     int         arg_current    = 0;
-    std::string arg_done       = "";    // TODO Needs a color.
+//    std::string arg_done       = "";
     bool        arg_elapsed    = false;
     bool        arg_estimate   = false;
     std::string arg_label;
     int         arg_max        = 0;
     int         arg_min        = 0;
     bool        arg_percentage = false;
-    std::string arg_remaining  = "";    // TODO Needs a color.
+//    std::string arg_remaining  = "";
     bool        arg_remove     = false;
     time_t      arg_start      = 0;
-    int         arg_width      = 80;    // TODO Default to terminal width.
+    int         arg_width      = 80;
     std::string arg_style      = "";
 
     static struct option longopts[] = {
       { "current",    required_argument, NULL, 'c' },
-      { "done",       required_argument, NULL, 'd' },
+//      { "done",       required_argument, NULL, 'd' },
       { "elapsed",    no_argument,       NULL, 'e' },
       { "estimate",   no_argument,       NULL, 't' },
       { "label",      required_argument, NULL, 'l' },
@@ -111,7 +111,7 @@ int main (int argc, char** argv)
       { "min",        required_argument, NULL, 'm' },
       { "now",        no_argument,       NULL, 'n' },
       { "percentage", no_argument,       NULL, 'p' },
-      { "remaining",  required_argument, NULL, 'a' },
+//      { "remaining",  required_argument, NULL, 'a' },
       { "remove",     no_argument,       NULL, 'r' },
       { "start",      required_argument, NULL, 's' },
       { "version",    no_argument,       NULL, 'v' },
@@ -122,12 +122,13 @@ int main (int argc, char** argv)
     };
 
     int ch;
-    while ((ch = getopt_long (argc, argv, "c:d:etl:x:m:npa:rs:vw:h", longopts, NULL)) != -1)
+//    while ((ch = getopt_long (argc, argv, "c:d:etl:x:m:npa:rs:vw:h", longopts, NULL)) != -1)
+    while ((ch = getopt_long (argc, argv, "c:etl:x:m:nprs:vw:h", longopts, NULL)) != -1)
     {
       switch (ch)
       {
       case 'c': arg_current    = atoi (optarg);        break;
-      case 'd': arg_done       = optarg;               break;
+//      case 'd': arg_done       = optarg;               break;
       case 'e': arg_elapsed    = true;                 break;
       case 't': arg_estimate   = true;                 break;
       case 'l': arg_label      = optarg;               break;
@@ -135,7 +136,7 @@ int main (int argc, char** argv)
       case 'm': arg_min        = atoi (optarg);        break;
       case 'n': std::cout << time (NULL) << std::endl; exit (0);
       case 'p': arg_percentage = true;                 break;
-      case 'a': arg_remaining  = optarg;               break;
+//      case 'a': arg_remaining  = optarg;               break;
       case 'r': arg_remove     = true;                 break;
       case 's': arg_start      = atoi (optarg);        break;
       case 'v': showVersion ();                        break;
