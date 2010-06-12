@@ -2,7 +2,7 @@
 ------ current release ---------------------------
 
 1.0.0 ()
- + Initial release supporting one bar style, percentage, elapsed, remaining,
+ + Initial release supporting three bar styles, percentage, elapsed, remaining,
    labels and width settings.
 
 ------ old releases ------------------------------
