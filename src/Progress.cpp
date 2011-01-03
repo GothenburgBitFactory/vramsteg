@@ -257,7 +257,7 @@ void Progress::renderStyleDefault ()
     std::cout << " "
               << elapsed_time;
 
-  if (estimate && start != 0)
+  if (estimate && start != 0 && fraction > 0.2)
     std::cout << " "
               << estimate_time;
 
