@@ -4,6 +4,7 @@
 1.0.0 ()
  + Initial release supporting three bar styles, percentage, elapsed, remaining,
    labels and width settings.
+ + When -width is not specified, uses the whole terminal width.
 
 ------ old releases ------------------------------
 

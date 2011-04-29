@@ -26,6 +26,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
+#include <sys/ioctl.h>
 #include <stdlib.h>
 #include <getopt.h>
 #include <unistd.h>
@@ -39,7 +40,7 @@ extern int optopt;
 extern int opterr;
 extern int optreset;
 
-
+////////////////////////////////////////////////////////////////////////////////
 void showUsage ()
 {
   std::cout << "\n"
@@ -52,7 +53,7 @@ void showUsage ()
             << "  -c, --current <value>       Current value of progress bar\n"
             << "  -p, --percentage            Show percentage\n"
             << "  -s, --start <value>         Start time epoch\n"
-            << "  -w, --width <value>         Width of progress bar, default 80\n"
+            << "  -w, --width <value>         Width of progress bar, default full width\n"
             << "  -n, --now                   Returns current time as epoch\n"
             << "  -r, --remove                Removes the progress bar\n"
             << "  -e, --elapsed               Show elapsed time (needs --start)\n"
@@ -123,6 +124,11 @@ int main (int argc, char** argv)
     time_t      arg_start      = 0;
     int         arg_width      = 80;
     std::string arg_style      = "";
+
+    // Dynamically determine terminal width.
+    unsigned short buff[4];
+    if (ioctl (fileno(stdout), TIOCGWINSZ, &buff) != -1)
+      arg_width = buff[1];
 
     static struct option longopts[] = {
       { "current",    required_argument, NULL, 'c' },

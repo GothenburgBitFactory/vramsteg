@@ -36,6 +36,17 @@ done
 ../src/vramsteg --width 60 --remove
 
 sleep 1
+echo Here is an example that uses the full screen width;
+sleep 2
+START=$(../src/vramsteg --now)
+for i in {0..6}
+do
+  ../src/vramsteg --style mono --min 0 --max 6 --current $i --label Demo --percentage --start $START --elapsed
+  sleep 1
+done
+../src/vramsteg --remove
+
+sleep 1
 echo Here is a more colorful version, uses less space, and is
 echo not removed from the screen after it is done:
 echo
