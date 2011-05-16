@@ -27,6 +27,7 @@
 
 #include <iostream>
 #include <sys/ioctl.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
 #include <unistd.h>
