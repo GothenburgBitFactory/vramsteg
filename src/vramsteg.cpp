@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Vramsteg - Utility for displaying progress bars in shell scripts.
 //
-// Copyright 2010, Paul Beckingham, Federico Hernandez.
+// Copyright 2010 - 2011, Paul Beckingham, Federico Hernandez.
 // All rights reserved.
 //
 // This program is free software; you can redistribute it and/or modify it under
@@ -80,7 +80,7 @@ void showVersion ()
 {
   std::cout << "\n"
             << "\033[1m" << "vramsteg 1.0" << "\033[0m\n"
-            << "Copyright (C) 2010 P. Beckingham, F. Hernandez.\n"
+            << "Copyright (C) 2010 - 2011, P. Beckingham, F. Hernandez.\n"
             << "\n"
             << "Vramsteg may be copied only under the terms of the GNU "
             << "General Public License, which may be found in the task "
