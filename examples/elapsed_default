@@ -4,15 +4,15 @@ echo Default style
 echo Default colors
 echo Default width
 echo No percentage
-echo No elapsed time
-echo With estimated remaining time
+echo With elapsed time
+echo No estimated remaining time
 echo No label
 echo No remove
 
-START=$(../vramsteg --now)
+START=$(../src/vramsteg --now)
 for i in {0..10}
 do
-  ../vramsteg --min 0 --max 10 --current $i --estimate --start $START
+  ../src/vramsteg --min 0 --max 10 --current $i --elapsed --start $START
   sleep 1
 done
 echo

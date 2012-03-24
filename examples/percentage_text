@@ -1,6 +1,6 @@
 #! /bin/bash
 
-echo 'mono' style
+echo 'text' style
 echo Default colors
 echo Default width
 echo With percentage
@@ -11,7 +11,7 @@ echo No remove
 
 for i in {0..10}
 do
-  ../vramsteg --style mono --percentage --min=0 --max=10 --current=$i
+  ../src/vramsteg --style text --percentage --min=0 --max=10 --current=$i
   sleep 1
 done
 echo

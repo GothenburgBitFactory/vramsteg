@@ -11,9 +11,9 @@ echo With remove
 
 for i in {0..10}
 do
-  ../vramsteg --style text --min=0 --max=10 --current=$i
+  ../src/vramsteg --style text --min=0 --max=10 --current=$i
   sleep 1
 done
 
-../vramsteg --remove
+../src/vramsteg --remove
 

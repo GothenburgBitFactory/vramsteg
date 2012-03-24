@@ -1,6 +1,6 @@
 #! /bin/bash
 
-echo 'text' style
+echo 'mono' style
 echo Default colors
 echo Default width
 echo No percentage
@@ -11,7 +11,7 @@ echo No remove
 
 for i in {0..10}
 do
-  ../vramsteg --style text --label "Bar label" --min 0 --max 10 --current $i
+  ../src/vramsteg --style mono --label "Bar label" --min 0 --max 10 --current $i
   sleep 1
 done
 echo

@@ -3,15 +3,15 @@
 echo 'text' style
 echo Default colors
 echo Default width
-echo With percentage
+echo No percentage
 echo No elapsed time
 echo No estimated remaining time
-echo No label
+echo With label
 echo No remove
 
 for i in {0..10}
 do
-  ../vramsteg --style text --percentage --min=0 --max=10 --current=$i
+  ../src/vramsteg --style text --label "Bar label" --min 0 --max 10 --current $i
   sleep 1
 done
 echo

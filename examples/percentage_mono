@@ -3,16 +3,15 @@
 echo 'mono' style
 echo Default colors
 echo Default width
-echo No percentage
-echo With elapsed time
+echo With percentage
+echo No elapsed time
 echo No estimated remaining time
 echo No label
 echo No remove
 
-START=$(../vramsteg --now)
 for i in {0..10}
 do
-  ../vramsteg --style mono --min 0 --max 10 --current $i --elapsed --start $START
+  ../src/vramsteg --style mono --percentage --min=0 --max=10 --current=$i
   sleep 1
 done
 echo

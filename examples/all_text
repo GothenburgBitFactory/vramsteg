@@ -9,12 +9,12 @@ echo With estimated remaining time
 echo With label
 echo With remove
 
-START=$(../vramsteg --now)
+START=$(../src/vramsteg --now)
 for i in {0..10}
 do
-  ../vramsteg --style text --width 80 --label label --min 0 --max 10 --current $i --percentage --elapsed --estimate --start $START
+  ../src/vramsteg --style text --width 80 --label label --min 0 --max 10 --current $i --percentage --elapsed --estimate --start $START
   sleep 1
 done
 
-../vramsteg --width 80 --remove
+../src/vramsteg --width 80 --remove
 
