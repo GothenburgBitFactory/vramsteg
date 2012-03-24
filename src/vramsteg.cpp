@@ -35,6 +35,7 @@
 #include <time.h>
 #include <signal.h>
 #include <Progress.h>
+#include <cmake.h>
 
 extern char *optarg;
 extern int optind;
@@ -80,14 +81,15 @@ void showUsage ()
 void showVersion ()
 {
   std::cout << "\n"
-            << "\033[1m" << "vramsteg 1.0" << "\033[0m\n"
+            << "\033[1m" << PACKAGE_STRING << "\033[0m\n"
+            << "Copyright (C) 2010 - 2012, Göteborg Bit Factory\n"
             << "Copyright (C) 2010 - 2012, P. Beckingham, F. Hernandez.\n"
             << "\n"
             << "Vramsteg may be copied only under the terms of the MIT license, "
             << "which may be found in the taskwarrior source kit.\n"
             << "\n"
-            << "Documentation for vramsteg can be found using 'man vramsteg', "
-            << " or at http://vitapi.org\n\n"
+            << "Documentation for vramsteg can be found using 'man vramsteg', or "
+            << "at http://tasktools.org.\n\n"
             << std::flush;
 
   exit (0);

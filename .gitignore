@@ -4,3 +4,9 @@ CMakeCache.txt
 cmake_install.cmake
 Makefile
 install_manifest.txt
+cmake.h
+commit.h
+CPackConfig.cmake
+CPackSourceConfig.cmake
+vramsteg.1
+

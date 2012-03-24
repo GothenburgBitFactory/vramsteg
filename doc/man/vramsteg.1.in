@@ -1,7 +1,7 @@
-.TH vramsteg 1 2010-06-06 "vramsteg 1.0.0" "User Manuals"
+.TH vramsteg 1 2012-03-24 "vramsteg 1.0.0" "User Manuals"
 
 .SH NAME
-vramsteg \- building blocks for UI
+vramsteg \- CLI progress bar
 
 .SH SYNOPSIS
 To display/update a progress bar:
@@ -179,7 +179,8 @@ is, in fact, a completely stateless program, which is why there are required
 command line arguments for some features.
 
 .SH "CREDITS & COPYRIGHTS"
-Copyright (C) 2010 \- 2012 P. Beckingham, F. Hernandez.
+Copyright (C) 2010 \- 2012 P. Beckingham, F. Hernandez
+Copyright (C) 2010 \- 2012 Göteborg Bit Factory
 .br
 Vramsteg is distributed under the MIT license. See
 http://www.opensource.org/licenses/mit-license.php for more information.
@@ -189,7 +190,7 @@ For more information regarding vramsteg, the following may be referenced:
 
 .TP
 The official site at
-<http://vitapi.org>
+<http://tasktools.org>
 
 .TP
 The official code repository at
@@ -197,9 +198,9 @@ The official code repository at
 
 .TP
 You can contact the project by writing an email to
-<support@vitapi.org>
+<support@yootabory.org>
 
 .SH REPORTING BUGS
 .TP
-Bugs in vramsteg may be reported to <support@vitapi.org>
+Bugs in vramsteg may be reported to <support@yootabory.org>
 
