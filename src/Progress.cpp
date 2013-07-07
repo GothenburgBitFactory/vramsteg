@@ -211,10 +211,12 @@ void Progress::renderStyleDefault ()
   // Estimated remaining time.
   std::string estimate_time;
   if (estimate && start != 0)
+  {
     if (fraction >= 1e-6)
       estimate_time = formatTime ((time_t) (int) (((now - start) * (1.0 - fraction)) / fraction));
     else
       estimate_time = formatTime (0);
+  }
 
   // Calculate bar width.
   int bar = width
@@ -291,10 +293,12 @@ void Progress::renderStyleMono ()
   // Estimated remaining time.
   std::string estimate_time;
   if (estimate && start != 0)
+  {
     if (fraction >= 1e-6)
       estimate_time = formatTime ((time_t) (int) (((now - start) * (1.0 - fraction)) / fraction));
     else
       estimate_time = formatTime (0);
+  }
 
   // Calculate bar width.
   int bar = width
@@ -371,10 +375,12 @@ void Progress::renderStyleText ()
   // Estimated remaining time.
   std::string estimate_time;
   if (estimate && start != 0)
+  {
     if (fraction >= 1e-6)
       estimate_time = formatTime ((time_t) (int) (((now - start) * (1.0 - fraction)) / fraction));
     else
       estimate_time = formatTime (0);
+  }
 
   // Calculate bar width.
   int bar = width
