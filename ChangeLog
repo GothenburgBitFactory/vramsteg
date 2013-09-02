@@ -1,9 +1,12 @@
 ------ current release ---------------------------
 
-1.0.1 (2013-09-02) c6030b2768bc94192ff042cdde42782f713c1050
- + Fixed compiler warnings.
+1.0.1 ()
+ + 
 
 ------ old releases ------------------------------
+
+1.0.1 (2013-09-02) c6030b2768bc94192ff042cdde42782f713c1050
+ + Fixed compiler warnings.
 
 1.0.0
  + Initial release supporting three bar styles, percentage, elapsed, remaining,
