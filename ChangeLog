@@ -1,14 +1,13 @@
-1.0.1 ()
- + Fixed compiler warnings.
-
 ------ current release ---------------------------
 
-1.0.0 ()
+1.0.1 (2013-09-02)
+ + Fixed compiler warnings.
+
+------ old releases ------------------------------
+
+1.0.0
  + Initial release supporting three bar styles, percentage, elapsed, remaining,
    labels and width settings.
  + When -width is not specified, uses the whole terminal width.
 
------- old releases ------------------------------
-
 Vramsteg project officially began 6th June, 2010.
-
