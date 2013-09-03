@@ -18,8 +18,9 @@
 #cmakedefine CYGWIN
 #cmakedefine FREEBSD
 #cmakedefine OPENBSD
+#cmakedefine NETBSD
 #cmakedefine HAIKU
 #cmakedefine SOLARIS
-#cmakedefine WIN32
+#cmakedefine KFREEBSD
+#cmakedefine GNUHURD
 #cmakedefine UNKNOWN
-
