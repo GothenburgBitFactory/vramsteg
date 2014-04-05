@@ -1,6 +1,8 @@
 ------ current release ---------------------------
 
 1.1.0 ()
+- TW-1296 make test/run_all exit with non-zero code if a test fail (thanks to
+          Jakub Wilk).
 - Added an initial test suite.
 - Corrected copyright line in source.
 
