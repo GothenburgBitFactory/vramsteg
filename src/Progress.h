@@ -35,21 +35,21 @@ class Progress
 {
 public:
   Progress ();
-  Progress (const std::string&, int, int, int, bool = true, bool = true);
+  Progress (const std::string&, int, long, long, bool = true, bool = true);
   ~Progress ();
 
   void setStyle (const std::string&);
   void setLabel (const std::string&);
   void setWidth (int);
-  void setMin (int);
-  void setMax (int);
+  void setMin (long);
+  void setMax (long);
   void showPercentage (bool);
   void removeAfter (bool);
   void setStart (time_t);
   void showEstimate (bool);
   void showElapsed (bool);
 
-  void update (int);
+  void update (long);
   void done ();
 
 private:
@@ -63,9 +63,9 @@ private:
   std::string style;
   std::string label;
   int width;
-  int minimum;
-  int maximum;
-  int current;
+  long minimum;
+  long maximum;
+  long current;
   bool percentage;
   bool remove;
   time_t start;

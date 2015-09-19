@@ -5,6 +5,8 @@
           Jakub Wilk).
 - Added an initial test suite.
 - Corrected copyright line in source.
+- Added support for 64-bit values for --min, --max, and --current arguments to
+  avoid overflows caused by using int (thanks to Jason A. Pfeil).
 
 ------ old releases ------------------------------
 

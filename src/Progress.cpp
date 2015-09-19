@@ -49,7 +49,7 @@ Progress::Progress ()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-Progress::Progress (const std::string& l, int w, int n, int x, bool p /* = true */, bool r /* = true */)
+Progress::Progress (const std::string& l, int w, long n, long x, bool p /* = true */, bool r /* = true */)
 : style ("")
 , label (l)
 , width (w)
@@ -88,13 +88,13 @@ void Progress::setWidth (int value)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void Progress::setMin (int value)
+void Progress::setMin (long value)
 {
   minimum = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void Progress::setMax (int value)
+void Progress::setMax (long value)
 {
   maximum = value;
 }
@@ -130,7 +130,7 @@ void Progress::showElapsed (bool value)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void Progress::update (int value)
+void Progress::update (long value)
 {
   if (isatty (fileno (stdout)) && current != value)
   {
@@ -199,7 +199,7 @@ std::string Progress::formatTime (time_t t)
 void Progress::renderStyleDefault ()
 {
   // Fraction completed.
-  float fraction = (1.0 * (current - minimum)) / (maximum - minimum);
+  double fraction = (1.0 * (current - minimum)) / (maximum - minimum);
 
   // Elapsed time.
   time_t now = time (NULL);
@@ -281,7 +281,7 @@ void Progress::renderStyleDefault ()
 void Progress::renderStyleMono ()
 {
   // Fraction completed.
-  float fraction = (1.0 * (current - minimum)) / (maximum - minimum);
+  double fraction = (1.0 * (current - minimum)) / (maximum - minimum);
 
   // Elapsed time.
   time_t now = time (NULL);
@@ -363,7 +363,7 @@ void Progress::renderStyleMono ()
 void Progress::renderStyleText ()
 {
   // Fraction completed.
-  float fraction = (1.0 * (current - minimum)) / (maximum - minimum);
+  double fraction = (1.0 * (current - minimum)) / (maximum - minimum);
 
   // Elapsed time.
   time_t now = time (NULL);
