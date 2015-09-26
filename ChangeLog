@@ -1,6 +1,6 @@
 ------ current release ---------------------------
 
-1.1.0 ()
+1.1.0 (ce4a5b607786508d065fc9d92ecae65b3a3a9097)
 - TW-1296 make test/run_all exit with non-zero code if a test fail (thanks to
           Jakub Wilk).
 - Added an initial test suite.
