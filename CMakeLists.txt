@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 2.8)
 set (HAVE_CMAKE true)
 
 project (vramsteg)
-set (PROJECT_VERSION "1.1.0")
+set (PROJECT_VERSION "1.1.1")
 
 SET (VRAMSTEG_MAN1DIR share/man/man1     CACHE STRING "Installation directory for man pages, section 1")
 SET (VRAMSTEG_DOCDIR  share/doc/vramsteg CACHE STRING "Installation directory for doc files")
