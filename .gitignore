@@ -10,3 +10,4 @@ CPackConfig.cmake
 CPackSourceConfig.cmake
 vramsteg.1
 _CPack_Packages
+patches
