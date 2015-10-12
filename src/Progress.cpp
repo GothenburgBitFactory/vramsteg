@@ -25,12 +25,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <Progress.h>
 #include <iostream>
 #include <sstream>
 #include <iomanip>
 #include <stdio.h>
 #include <unistd.h>
-#include <Progress.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 Progress::Progress ()
@@ -202,7 +202,7 @@ void Progress::renderStyleDefault ()
   double fraction = (1.0 * (current - minimum)) / (maximum - minimum);
 
   // Elapsed time.
-  time_t now = time (NULL);
+  time_t now = time (nullptr);
   std::string elapsed_time;
   if (elapsed && start != 0)
     elapsed_time = formatTime (now - start);
@@ -284,7 +284,7 @@ void Progress::renderStyleMono ()
   double fraction = (1.0 * (current - minimum)) / (maximum - minimum);
 
   // Elapsed time.
-  time_t now = time (NULL);
+  time_t now = time (nullptr);
   std::string elapsed_time;
   if (elapsed && start != 0)
     elapsed_time = formatTime (now - start);
@@ -366,7 +366,7 @@ void Progress::renderStyleText ()
   double fraction = (1.0 * (current - minimum)) / (maximum - minimum);
 
   // Elapsed time.
-  time_t now = time (NULL);
+  time_t now = time (nullptr);
   std::string elapsed_time;
   if (elapsed && start != 0)
     elapsed_time = formatTime (now - start);

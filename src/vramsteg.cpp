@@ -133,34 +133,34 @@ int main (int argc, char** argv)
       arg_width = buff[1];
 
     static struct option longopts[] = {
-      { "current",    required_argument, NULL, 'c' },
+      { "current",    required_argument, nullptr, 'c' },
 #ifdef WAITING_FOR_VITAPI
-      { "done",       required_argument, NULL, 'd' },
+      { "done",       required_argument, nullptr, 'd' },
 #endif
-      { "elapsed",    no_argument,       NULL, 'e' },
-      { "estimate",   no_argument,       NULL, 't' },
-      { "label",      required_argument, NULL, 'l' },
-      { "max",        required_argument, NULL, 'x' },
-      { "min",        required_argument, NULL, 'm' },
-      { "now",        no_argument,       NULL, 'n' },
-      { "percentage", no_argument,       NULL, 'p' },
+      { "elapsed",    no_argument,       nullptr, 'e' },
+      { "estimate",   no_argument,       nullptr, 't' },
+      { "label",      required_argument, nullptr, 'l' },
+      { "max",        required_argument, nullptr, 'x' },
+      { "min",        required_argument, nullptr, 'm' },
+      { "now",        no_argument,       nullptr, 'n' },
+      { "percentage", no_argument,       nullptr, 'p' },
 #ifdef WAITING_FOR_VITAPI
-      { "remaining",  required_argument, NULL, 'a' },
+      { "remaining",  required_argument, nullptr, 'a' },
 #endif
-      { "remove",     no_argument,       NULL, 'r' },
-      { "start",      required_argument, NULL, 's' },
-      { "version",    no_argument,       NULL, 'v' },
-      { "width",      required_argument, NULL, 'w' },
-      { "style",      required_argument, NULL, 'y' },
-      { "help",       no_argument,       NULL, 'h' },
-      { NULL,         0,                 NULL, 0   }
+      { "remove",     no_argument,       nullptr, 'r' },
+      { "start",      required_argument, nullptr, 's' },
+      { "version",    no_argument,       nullptr, 'v' },
+      { "width",      required_argument, nullptr, 'w' },
+      { "style",      required_argument, nullptr, 'y' },
+      { "help",       no_argument,       nullptr, 'h' },
+      { nullptr,         0,                 nullptr, 0   }
     };
 
     int ch;
 #ifdef WAITING_FOR_VITAPI
-    while ((ch = getopt_long (argc, argv, "c:d:etl:x:m:npa:rs:vw:h", longopts, NULL)) != -1)
+    while ((ch = getopt_long (argc, argv, "c:d:etl:x:m:npa:rs:vw:h", longopts, nullptr)) != -1)
 #else
-    while ((ch = getopt_long (argc, argv, "c:etl:x:m:nprs:vw:h", longopts, NULL)) != -1)
+    while ((ch = getopt_long (argc, argv, "c:etl:x:m:nprs:vw:h", longopts, nullptr)) != -1)
 #endif
     {
       switch (ch)
@@ -174,7 +174,7 @@ int main (int argc, char** argv)
       case 'l': arg_label      = optarg;               break;
       case 'x': arg_max        = atol (optarg);        break;
       case 'm': arg_min        = atol (optarg);        break;
-      case 'n': std::cout << time (NULL) << std::endl; exit (0);
+      case 'n': std::cout << time (nullptr) << std::endl; exit (0);
       case 'p': arg_percentage = true;                 break;
 #ifdef WAITING_FOR_VITAPI
       case 'a': arg_remaining  = optarg;               break;
