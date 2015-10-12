@@ -205,7 +205,7 @@ int main (int argc, char** argv)
         throw std::string ("The --current value must not lie outside the --min/--max range.");
 
     if (arg_width && arg_label.length ())
-      if (arg_label.length () >= arg_width)
+      if (arg_label.length () >= static_cast <unsigned int> (arg_width))
         throw std::string ("The --label string is longer than the allowed --width value.");
 
     if (! arg_remove && ! (arg_min || arg_current || arg_max))
