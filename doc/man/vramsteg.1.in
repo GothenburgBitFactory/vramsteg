@@ -179,8 +179,8 @@ is, in fact, a completely stateless program, which is why there are required
 command line arguments for some features.
 
 .SH "CREDITS & COPYRIGHTS"
-Copyright (C) 2010 \- 2015 P. Beckingham, F. Hernandez
-Copyright (C) 2010 \- 2015 Göteborg Bit Factory
+Copyright (C) 2010 \- 2016 P. Beckingham, F. Hernandez
+Copyright (C) 2010 \- 2016 Göteborg Bit Factory
 .br
 Vramsteg is distributed under the MIT license. See
 http://www.opensource.org/licenses/mit-license.php for more information.
