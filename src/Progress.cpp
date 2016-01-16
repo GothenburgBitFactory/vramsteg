@@ -34,81 +34,81 @@
 ////////////////////////////////////////////////////////////////////////////////
 void Progress::setStyle (const std::string& value)
 {
-  style = value;
+  _style = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Progress::setLabel (const std::string& value)
 {
-  label = value;
+  _label = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Progress::setWidth (int value)
 {
-  width = value;
+  _width = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Progress::setMin (long value)
 {
-  minimum = value;
+  _minimum = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Progress::setMax (long value)
 {
-  maximum = value;
+  _maximum = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Progress::showPercentage (bool value)
 {
-  percentage = value;
+  _percentage = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Progress::removeAfter (bool value)
 {
-  remove = value;
+  _remove = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Progress::setStart (time_t value)
 {
-  start = value;
+  _start = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Progress::showEstimate (bool value)
 {
-  estimate = value;
+  _estimate = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Progress::showElapsed (bool value)
 {
-  elapsed = value;
+  _elapsed = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Progress::update (long value)
 {
-  if (isatty (fileno (stdout)) && current != value)
+  if (isatty (fileno (stdout)) && _current != value)
   {
     // Box the range.
-    if (value < minimum) value = minimum;
-    if (value > maximum) value = maximum;
+    if (value < _minimum) value = _minimum;
+    if (value > _maximum) value = _maximum;
 
     // Current value.
-    current = value;
+    _current = value;
 
     // Capable of supporting multiple styles.
-         if (style == "")     renderStyleDefault ();
-    else if (style == "mono") renderStyleMono ();
-    else if (style == "text") renderStyleText ();
+         if (_style == "")     renderStyleDefault ();
+    else if (_style == "mono") renderStyleMono ();
+    else if (_style == "text") renderStyleText ();
     else
-      throw std::string ("Style '") + style + "' not supported.";
+      throw std::string ("Style '") + _style + "' not supported.";
   }
 }
 
@@ -117,10 +117,10 @@ void Progress::done ()
 {
   if (isatty (fileno (stdout)))
   {
-    if (remove)
+    if (_remove)
       std::cout << "\r"
                 << std::setfill (' ')
-                << std::setw (width)
+                << std::setw (_width)
                 << ' ';
 
     std::cout << std::endl;
@@ -128,7 +128,7 @@ void Progress::done ()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string Progress::formatTime (time_t t)
+std::string Progress::formatTime (time_t t) const
 {
   char buffer [128];
 
@@ -161,30 +161,30 @@ std::string Progress::formatTime (time_t t)
 void Progress::renderStyleDefault ()
 {
   // Fraction completed.
-  double fraction = (1.0 * (current - minimum)) / (maximum - minimum);
+  double fraction = (1.0 * (_current - _minimum)) / (_maximum - _minimum);
 
   // Elapsed time.
   time_t now = time (nullptr);
   std::string elapsed_time;
-  if (elapsed && start != 0)
-    elapsed_time = formatTime (now - start);
+  if (_elapsed && _start != 0)
+    elapsed_time = formatTime (now - _start);
 
   // Estimated remaining time.
   std::string estimate_time;
-  if (estimate && start != 0)
+  if (_estimate && _start != 0)
   {
     if (fraction >= 1e-6)
-      estimate_time = formatTime ((time_t) (int) (((now - start) * (1.0 - fraction)) / fraction));
+      estimate_time = formatTime ((time_t) (int) (((now - _start) * (1.0 - fraction)) / fraction));
     else
       estimate_time = formatTime (0);
   }
 
   // Calculate bar width.
-  int bar = width
-          - (label.length () ? label.length () + 1         : 0)
-          - (percentage      ? 5                           : 0)
-          - (elapsed         ? elapsed_time.length () + 1  : 0)
-          - (estimate        ? estimate_time.length () + 1 : 0);
+  int bar = _width
+          - (_label.length () ? _label.length () + 1        : 0)
+          - (_percentage      ? 5                           : 0)
+          - (_elapsed         ? elapsed_time.length () + 1  : 0)
+          - (_estimate        ? estimate_time.length () + 1 : 0);
 
   if (bar < 1)
     throw std::string ("The specified width is insufficient.");
@@ -192,8 +192,8 @@ void Progress::renderStyleDefault ()
   int visible = (int) (fraction * bar);
 
   // Render.
-  if (label.length ())
-    std::cout << label
+  if (_label.length ())
+    std::cout << _label
               << ' ';
 
   if (visible > 0)
@@ -210,18 +210,18 @@ void Progress::renderStyleDefault ()
 
   std::cout << "\033[0m";
 
-  if (percentage)
+  if (_percentage)
     std::cout << " "
               << std::setfill (' ')
               << std::setw (3)
               << (int) (fraction * 100)
               << "%";
 
-  if (elapsed && start != 0)
+  if (_elapsed && _start != 0)
     std::cout << " "
               << elapsed_time;
 
-  if (estimate && start != 0 && fraction > 0.2)
+  if (_estimate && _start != 0 && fraction > 0.2)
     std::cout << " "
               << estimate_time;
 
@@ -243,30 +243,30 @@ void Progress::renderStyleDefault ()
 void Progress::renderStyleMono ()
 {
   // Fraction completed.
-  double fraction = (1.0 * (current - minimum)) / (maximum - minimum);
+  double fraction = (1.0 * (_current - _minimum)) / (_maximum - _minimum);
 
   // Elapsed time.
   time_t now = time (nullptr);
   std::string elapsed_time;
-  if (elapsed && start != 0)
-    elapsed_time = formatTime (now - start);
+  if (_elapsed && _start != 0)
+    elapsed_time = formatTime (now - _start);
 
   // Estimated remaining time.
   std::string estimate_time;
-  if (estimate && start != 0)
+  if (_estimate && _start != 0)
   {
     if (fraction >= 1e-6)
-      estimate_time = formatTime ((time_t) (int) (((now - start) * (1.0 - fraction)) / fraction));
+      estimate_time = formatTime ((time_t) (int) (((now - _start) * (1.0 - fraction)) / fraction));
     else
       estimate_time = formatTime (0);
   }
 
   // Calculate bar width.
-  int bar = width
-          - (label.length () ? label.length () + 1         : 0)
-          - (percentage      ? 5                           : 0)
-          - (elapsed         ? elapsed_time.length () + 1  : 0)
-          - (estimate        ? estimate_time.length () + 1 : 0);
+  int bar = _width
+          - (_label.length () ? _label.length () + 1        : 0)
+          - (_percentage      ? 5                           : 0)
+          - (_elapsed         ? elapsed_time.length () + 1  : 0)
+          - (_estimate        ? estimate_time.length () + 1 : 0);
 
   if (bar < 1)
     throw std::string ("The specified width is insufficient.");
@@ -274,8 +274,8 @@ void Progress::renderStyleMono ()
   int visible = (int) (fraction * bar);
 
   // Render.
-  if (label.length ())
-    std::cout << label
+  if (_label.length ())
+    std::cout << _label
               << ' ';
 
   if (visible > 0)
@@ -292,18 +292,18 @@ void Progress::renderStyleMono ()
 
   std::cout << "\033[0m";
 
-  if (percentage)
+  if (_percentage)
     std::cout << " "
               << std::setfill (' ')
               << std::setw (3)
               << (int) (fraction * 100)
               << "%";
 
-  if (elapsed && start != 0)
+  if (_elapsed && _start != 0)
     std::cout << " "
               << elapsed_time;
 
-  if (estimate && start != 0)
+  if (_estimate && _start != 0)
     std::cout << " "
               << estimate_time;
 
@@ -325,31 +325,31 @@ void Progress::renderStyleMono ()
 void Progress::renderStyleText ()
 {
   // Fraction completed.
-  double fraction = (1.0 * (current - minimum)) / (maximum - minimum);
+  double fraction = (1.0 * (_current - _minimum)) / (_maximum - _minimum);
 
   // Elapsed time.
   time_t now = time (nullptr);
   std::string elapsed_time;
-  if (elapsed && start != 0)
-    elapsed_time = formatTime (now - start);
+  if (_elapsed && _start != 0)
+    elapsed_time = formatTime (now - _start);
 
   // Estimated remaining time.
   std::string estimate_time;
-  if (estimate && start != 0)
+  if (_estimate && _start != 0)
   {
     if (fraction >= 1e-6)
-      estimate_time = formatTime ((time_t) (int) (((now - start) * (1.0 - fraction)) / fraction));
+      estimate_time = formatTime ((time_t) (int) (((now - _start) * (1.0 - fraction)) / fraction));
     else
       estimate_time = formatTime (0);
   }
 
   // Calculate bar width.
-  int bar = width
+  int bar = _width
           - 2                                                    // The [ and ]
-          - (label.length () ? label.length () + 1         : 0)
-          - (percentage      ? 5                           : 0)
-          - (elapsed         ? elapsed_time.length () + 1  : 0)
-          - (estimate        ? estimate_time.length () + 1 : 0);
+          - (_label.length () ? _label.length () + 1        : 0)
+          - (_percentage      ? 5                           : 0)
+          - (_elapsed         ? elapsed_time.length () + 1  : 0)
+          - (_estimate        ? estimate_time.length () + 1 : 0);
 
   if (bar < 1)
     throw std::string ("The specified width is insufficient.");
@@ -357,8 +357,8 @@ void Progress::renderStyleText ()
   int visible = (int) (fraction * bar);
 
   // Render.
-  if (label.length ())
-    std::cout << label
+  if (_label.length ())
+    std::cout << _label
               << ' ';
 
   std::cout << '[';
@@ -375,18 +375,18 @@ void Progress::renderStyleText ()
 
   std::cout << ']';
 
-  if (percentage)
+  if (_percentage)
     std::cout << " "
               << std::setfill (' ')
               << std::setw (3)
               << (int) (fraction * 100)
               << "%";
 
-  if (elapsed && start != 0)
+  if (_elapsed && _start != 0)
     std::cout << " "
               << elapsed_time;
 
-  if (estimate && start != 0)
+  if (_estimate && _start != 0)
     std::cout << " "
               << estimate_time;
 

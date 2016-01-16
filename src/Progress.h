@@ -47,23 +47,23 @@ public:
   void done ();
 
 private:
-  std::string formatTime (time_t);
+  std::string formatTime (time_t) const;
   void renderStyleDefault ();
   void renderStyleMono ();
   void renderStyleText ();
 
 private:
-  std::string style {};
-  std::string label {};
-  int width         {80};
-  long minimum      {0};
-  long maximum      {0};
-  long current      {-1};
-  bool percentage   {true};
-  bool remove       {true};
-  time_t start      {0};
-  bool estimate     {false};
-  bool elapsed      {false};
+  std::string _style {};
+  std::string _label {};
+  int _width         {80};
+  long _minimum      {0};
+  long _maximum      {0};
+  long _current      {-1};
+  bool _percentage   {true};
+  bool _remove       {true};
+  time_t _start      {0};
+  bool _estimate     {false};
+  bool _elapsed      {false};
 };
 
 #endif
