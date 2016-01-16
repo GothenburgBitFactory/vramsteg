@@ -1,5 +1,4 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Vramsteg - Utility for displaying progress bars in shell scripts.
 //
 // Copyright 2010 - 2016, Paul Beckingham, Federico Hernandez.
 //
