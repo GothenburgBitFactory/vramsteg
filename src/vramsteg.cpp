@@ -98,7 +98,6 @@ int main (int argc, char** argv)
     // this would lead to odd colors persisting in the terminal.
     signal (SIGHUP,    SIG_IGN);
     signal (SIGINT,    SIG_IGN);
-    signal (SIGKILL,   SIG_IGN);
     signal (SIGPIPE,   SIG_IGN);
     signal (SIGTERM,   SIG_IGN);
     signal (SIGUSR1,   SIG_IGN);
