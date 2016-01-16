@@ -36,7 +36,7 @@ done
 ../src/vramsteg --width 60 --remove
 
 sleep 1
-echo Here is an example that uses the full screen width;
+echo Here is an example that uses the full terminal width;
 sleep 2
 START=$(../src/vramsteg --now)
 for i in {0..6}
@@ -48,7 +48,7 @@ done
 
 sleep 1
 echo Here is a more colorful version, uses less space, and is
-echo not removed from the screen after it is done:
+echo not removed from the display after it is done:
 echo
 sleep 2
 START=$(../src/vramsteg --now)
