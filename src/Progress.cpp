@@ -32,7 +32,7 @@
 #include <unistd.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-Progress::Progress (const std::string& l, int w, long n, long x, bool p /* = true */, bool r /* = true */)
+Progress::Progress (const std::string& l, int w, long n, long x, bool p, bool r)
 : style ("")
 , label (l)
 , width (w)
