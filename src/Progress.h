@@ -28,7 +28,7 @@
 #define INCLUDED_PROGRESS
 
 #include <string>
-#include <time.h>
+#include <ctime>
 
 class Progress
 {
@@ -43,13 +43,11 @@ public:
   void setStart (time_t);
   void showEstimate (bool);
   void showElapsed (bool);
-
   void update (long);
   void done ();
 
 private:
   std::string formatTime (time_t);
-
   void renderStyleDefault ();
   void renderStyleMono ();
   void renderStyleText ();
