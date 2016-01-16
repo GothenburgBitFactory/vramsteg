@@ -26,12 +26,12 @@
 
 #include <iostream>
 #include <sys/ioctl.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <getopt.h>
 #include <unistd.h>
-#include <time.h>
-#include <signal.h>
+#include <ctime>
+#include <csignal>
 #include <Progress.h>
 #include <cmake.h>
 

@@ -28,7 +28,7 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
-#include <stdio.h>
+#include <cstdio>
 #include <unistd.h>
 
 ////////////////////////////////////////////////////////////////////////////////
