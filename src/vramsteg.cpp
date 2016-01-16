@@ -59,10 +59,6 @@ void showUsage ()
             << "  -r, --remove                Removes the progress bar\n"
             << "  -e, --elapsed               Show elapsed time (needs --start)\n"
             << "  -t, --estimate              Show estimated remaining time (needs --start)\n"
-#ifdef WAITING_FOR_VITAPI
-            << "  -d, --done <color>          Color of completed part\n"
-            << "  -a, --remaining <color>     Color of incomplete part\n"
-#endif
             << "  -v, --version               Show vramsteg version\n"
             << "  -h, --help                  Show command options\n"
             << "\n"
@@ -109,18 +105,12 @@ int main (int argc, char** argv)
     signal (SIGUSR2,   SIG_IGN);
 
     long        arg_current    = 0;
-#ifdef WAITING_FOR_VITAPI
-    std::string arg_done       = "";
-#endif
     bool        arg_elapsed    = false;
     bool        arg_estimate   = false;
     std::string arg_label;
     long        arg_max        = 0;
     long        arg_min        = 0;
     bool        arg_percentage = false;
-#ifdef WAITING_FOR_VITAPI
-    std::string arg_remaining  = "";
-#endif
     bool        arg_remove     = false;
     time_t      arg_start      = 0;
     int         arg_width      = 80;
@@ -133,9 +123,6 @@ int main (int argc, char** argv)
 
     static struct option longopts[] = {
       { "current",    required_argument, nullptr, 'c' },
-#ifdef WAITING_FOR_VITAPI
-      { "done",       required_argument, nullptr, 'd' },
-#endif
       { "elapsed",    no_argument,       nullptr, 'e' },
       { "estimate",   no_argument,       nullptr, 't' },
       { "label",      required_argument, nullptr, 'l' },
@@ -143,9 +130,6 @@ int main (int argc, char** argv)
       { "min",        required_argument, nullptr, 'm' },
       { "now",        no_argument,       nullptr, 'n' },
       { "percentage", no_argument,       nullptr, 'p' },
-#ifdef WAITING_FOR_VITAPI
-      { "remaining",  required_argument, nullptr, 'a' },
-#endif
       { "remove",     no_argument,       nullptr, 'r' },
       { "start",      required_argument, nullptr, 's' },
       { "version",    no_argument,       nullptr, 'v' },
@@ -156,18 +140,11 @@ int main (int argc, char** argv)
     };
 
     int ch;
-#ifdef WAITING_FOR_VITAPI
-    while ((ch = getopt_long (argc, argv, "c:d:etl:x:m:npa:rs:vw:h", longopts, nullptr)) != -1)
-#else
     while ((ch = getopt_long (argc, argv, "c:etl:x:m:nprs:vw:h", longopts, nullptr)) != -1)
-#endif
     {
       switch (ch)
       {
       case 'c': arg_current    = atol (optarg);        break;
-#ifdef WAITING_FOR_VITAPI
-      case 'd': arg_done       = optarg;               break;
-#endif
       case 'e': arg_elapsed    = true;                 break;
       case 't': arg_estimate   = true;                 break;
       case 'l': arg_label      = optarg;               break;
@@ -175,9 +152,6 @@ int main (int argc, char** argv)
       case 'm': arg_min        = atol (optarg);        break;
       case 'n': std::cout << time (nullptr) << std::endl; exit (0);
       case 'p': arg_percentage = true;                 break;
-#ifdef WAITING_FOR_VITAPI
-      case 'a': arg_remaining  = optarg;               break;
-#endif
       case 'r': arg_remove     = true;                 break;
       case 's': arg_start      = atoi (optarg);        break;
       case 'v': showVersion ();                        break;
