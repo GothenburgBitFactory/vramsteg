@@ -33,8 +33,6 @@
 class Progress
 {
 public:
-  Progress (const std::string&, int, long, long, bool, bool);
-
   void setStyle (const std::string&);
   void setLabel (const std::string&);
   void setWidth (int);
@@ -57,17 +55,17 @@ private:
   void renderStyleText ();
 
 private:
-  std::string style;
-  std::string label;
-  int width;
-  long minimum;
-  long maximum;
-  long current;
-  bool percentage;
-  bool remove;
-  time_t start;
-  bool estimate;
-  bool elapsed;
+  std::string style {};
+  std::string label {};
+  int width         {80};
+  long minimum      {0};
+  long maximum      {0};
+  long current      {-1};
+  bool percentage   {true};
+  bool remove       {true};
+  time_t start      {0};
+  bool estimate     {false};
+  bool elapsed      {false};
 };
 
 #endif

@@ -218,8 +218,14 @@ int main (int argc, char** argv)
 
     // Disallow signals from stopping the program while it is displaying color codes
     // Set up and render Progress object.
-    Progress p (arg_label, arg_width, arg_min, arg_max, arg_percentage, arg_remove);
+    Progress p;
     p.setStyle (arg_style);
+    p.setLabel (arg_label);
+    p.setWidth (arg_width);
+    p.setMin (arg_min);
+    p.setMax (arg_max);
+    p.showPercentage (arg_percentage);
+    p.removeAfter (arg_remove);
     p.setStart (arg_start);
     p.showElapsed (arg_elapsed);
     p.showEstimate (arg_estimate);

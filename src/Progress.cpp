@@ -32,22 +32,6 @@
 #include <unistd.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-Progress::Progress (const std::string& l, int w, long n, long x, bool p, bool r)
-: style ("")
-, label (l)
-, width (w)
-, minimum (n)
-, maximum (x)
-, percentage (p)
-, remove (r)
-, start (0)
-, estimate (false)
-, elapsed (false)
-{
-  current = -1;
-}
-
-////////////////////////////////////////////////////////////////////////////////
 void Progress::setStyle (const std::string& value)
 {
   style = value;
