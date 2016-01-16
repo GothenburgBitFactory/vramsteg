@@ -32,22 +32,6 @@
 #include <unistd.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-Progress::Progress ()
-: style ("")
-, label ("")
-, width (0)
-, minimum (0)
-, maximum (0)
-, current (-1)
-, percentage (true)
-, remove (true)
-, start (0)
-, estimate (false)
-, elapsed (false)
-{
-}
-
-////////////////////////////////////////////////////////////////////////////////
 Progress::Progress (const std::string& l, int w, long n, long x, bool p /* = true */, bool r /* = true */)
 : style ("")
 , label (l)
@@ -61,11 +45,6 @@ Progress::Progress (const std::string& l, int w, long n, long x, bool p /* = tru
 , elapsed (false)
 {
   current = -1;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-Progress::~Progress ()
-{
 }
 
 ////////////////////////////////////////////////////////////////////////////////

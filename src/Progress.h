@@ -33,9 +33,7 @@
 class Progress
 {
 public:
-  Progress ();
   Progress (const std::string&, int, long, long, bool = true, bool = true);
-  ~Progress ();
 
   void setStyle (const std::string&);
   void setLabel (const std::string&);
