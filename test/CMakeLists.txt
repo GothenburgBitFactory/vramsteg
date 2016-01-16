@@ -7,7 +7,7 @@ include_directories (${CMAKE_SOURCE_DIR}
                      ${CMAKE_SOURCE_DIR}/test
                      ${VRAMSTEG_INCLUDE_DIRS})
 
-set (test_SRCS progress.t)
+set (test_SRCS )
 
 add_custom_target (test ./run_all --verbose
                         DEPENDS ${test_SRCS}
