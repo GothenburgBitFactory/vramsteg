@@ -113,7 +113,7 @@ void Progress::update (long value)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void Progress::done ()
+void Progress::done () const
 {
   if (isatty (fileno (stdout)))
   {
@@ -158,7 +158,7 @@ std::string Progress::formatTime (time_t t) const
 //                                 ^^^^             Percentage complete
 //                                      ^^^^        Elapsed time
 //                                           ^^^^   Remaining estimate
-void Progress::renderStyleDefault ()
+void Progress::renderStyleDefault () const
 {
   // Fraction completed.
   double fraction = (1.0 * (_current - _minimum)) / (_maximum - _minimum);
@@ -240,7 +240,7 @@ void Progress::renderStyleDefault ()
 //                                 ^^^^             Percentage complete
 //                                      ^^^^        Elapsed time
 //                                           ^^^^   Remaining estimate
-void Progress::renderStyleMono ()
+void Progress::renderStyleMono () const
 {
   // Fraction completed.
   double fraction = (1.0 * (_current - _minimum)) / (_maximum - _minimum);
@@ -322,7 +322,7 @@ void Progress::renderStyleMono ()
 //                                  ^^^^             Percentage complete
 //                                       ^^^^        Elapsed time
 //                                            ^^^^   Remaining estimate
-void Progress::renderStyleText ()
+void Progress::renderStyleText () const
 {
   // Fraction completed.
   double fraction = (1.0 * (_current - _minimum)) / (_maximum - _minimum);

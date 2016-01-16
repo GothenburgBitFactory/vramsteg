@@ -44,13 +44,13 @@ public:
   void showEstimate (bool);
   void showElapsed (bool);
   void update (long);
-  void done ();
+  void done () const;
 
 private:
   std::string formatTime (time_t) const;
-  void renderStyleDefault ();
-  void renderStyleMono ();
-  void renderStyleText ();
+  void renderStyleDefault () const;
+  void renderStyleMono () const;
+  void renderStyleText () const;
 
 private:
   std::string _style {};
