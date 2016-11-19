@@ -135,7 +135,7 @@ int main (int argc, char** argv)
       { "width",      required_argument, nullptr, 'w' },
       { "style",      required_argument, nullptr, 'y' },
       { "help",       no_argument,       nullptr, 'h' },
-      { nullptr,         0,                 nullptr, 0   }
+      { nullptr,      0,                 nullptr, 0   }
     };
 
     int ch;
