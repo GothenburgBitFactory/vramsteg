@@ -8,6 +8,7 @@
 - Converted to C++11.
 - Improved compliance with CppCoreGuidelines.
 - Integated common CMake CXX module.
+- Updated test suite to Python.
 
 ------ old releases ------------------------------
 

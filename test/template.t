@@ -29,12 +29,11 @@
 import sys
 import os
 import unittest
-import re
+from datetime import datetime
 # Ensure python finds the local simpletap module
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from basetest import Vramsteg, TestCase
-from basetest.utils import run_cmd_wait
+from basetest import Timew, TestCase
 
 # Test methods available:
 #     self.assertEqual(a, b)
@@ -52,14 +51,63 @@ from basetest.utils import run_cmd_wait
 #     self.assertNotRegexpMatches(text, pattern)
 #     self.tap("")
 
-class TestVersion(TestCase):
+class TestBugNumber(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        """Executed once before any test in the class"""
+        # Used to initialize objects that can be shared across tests
+        # Also useful if none of the tests of the current TestCase performs
+        # data alterations. See tw-285.t for an example
+
     def setUp(self):
+        """Executed before each test in the class"""
+        # Used to initialize objects that should be re-initialized or
+        # re-created for each individual test
         self.t = Vramsteg()
 
-    def test_version_option(self):
-        """Verify that  'vramsteg --version' returns something valid"""
-        code, out, err = self.t("--version")
-        self.assertRegexpMatches(out, r'vramsteg \d+\.\d+\.\d+')
+    def test_foo(self):
+        """Test foo"""
+        code, out, err = self.t("foo")
+        self.tap(out)
+        self.tap(err)
+
+    def test_faketime(self):
+        """Running tests using libfaketime
+
+           WARNING:
+             faketime version 0.9.6 and later correctly propagates non-zero
+             exit codes.  Please don't combine faketime tests and
+             self.t.runError().
+
+             https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=750721
+        """
+        self.t.faketime("-2y")
+
+        command = ("insert test here")
+        self.t(command)
+
+        # Remove FAKETIME settings
+        self.t.faketime()
+
+        code, out, err = self.t("insert test here")
+        expected = "2.0y"
+        self.assertIn(expected, out)
+
+    @unittest.skipIf(1 != 0, "This machine has sane logic")
+    def test_skipped(self):
+        """Test all logic of the world"""
+
+    @unittest.expectedFailure
+    def test_expected_failure(self):
+        """Test something that fails and we know or expect that"""
+        self.assertEqual(1, 0)
+
+    def tearDown(self):
+        """Executed after each test in the class"""
+
+    @classmethod
+    def tearDownClass(cls):
+        """Executed once after all tests in the class"""
 
 
 if __name__ == "__main__":
