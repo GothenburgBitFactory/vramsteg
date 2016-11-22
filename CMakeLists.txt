@@ -17,6 +17,11 @@ set (PACKAGE_TARNAME "${PACKAGE}")
 set (PACKAGE_VERSION "${VERSION}")
 set (PACKAGE_STRING "${PACKAGE} ${VERSION}")
 
+if (FREEBSD)
+SET (VRAMSTEG_MAN1DIR man/man1 CACHE STRING "Installation directory for man pages, section 1")
+else (FREEBSD)
+SET (VRAMSTEG_MAN1DIR share/man/man1 CACHE STRING "Installation directory for man pages, section 1")
+endif (FREEBSD)
 SET (VRAMSTEG_DOCDIR  share/doc/clog CACHE STRING "Installation directory for doc files")
 SET (VRAMSTEG_BINDIR  bin            CACHE STRING "Installation directory for the binary")
 
