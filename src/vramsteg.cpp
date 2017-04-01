@@ -103,17 +103,17 @@ int main (int argc, char** argv)
     signal (SIGUSR1,   SIG_IGN);
     signal (SIGUSR2,   SIG_IGN);
 
-    long        arg_current    = 0;
-    bool        arg_elapsed    = false;
-    bool        arg_estimate   = false;
-    std::string arg_label;
-    long        arg_max        = 0;
-    long        arg_min        = 0;
-    bool        arg_percentage = false;
-    bool        arg_remove     = false;
-    time_t      arg_start      = 0;
-    int         arg_width      = 80;
-    std::string arg_style      = "";
+    long        arg_current    {0};
+    bool        arg_elapsed    {false};
+    bool        arg_estimate   {false};
+    std::string arg_label      {};
+    long        arg_max        {0};
+    long        arg_min        {0};
+    bool        arg_percentage {false};
+    bool        arg_remove     {false};
+    time_t      arg_start      {0};
+    int         arg_width      {80};
+    std::string arg_style      {};
 
     // Dynamically determine terminal width.
     unsigned short buff[4];

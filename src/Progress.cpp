@@ -104,7 +104,7 @@ void Progress::renderStyleDefault () const
   double fraction = (1.0 * (_current - minimum)) / (maximum - minimum);
 
   // Elapsed time.
-  time_t now = time (nullptr);
+  auto now = time (nullptr);
   std::string elapsed_time;
   if (elapsed && start != 0)
     elapsed_time = formatTime (now - start);
@@ -120,11 +120,11 @@ void Progress::renderStyleDefault () const
   }
 
   // Calculate bar width.
-  int bar = width
-          - (label.length () ? label.length () + 1         : 0)
-          - (percentage      ? 5                           : 0)
-          - (elapsed         ? elapsed_time.length () + 1  : 0)
-          - (estimate        ? estimate_time.length () + 1 : 0);
+  auto bar = width
+           - (label.length () ? label.length () + 1         : 0)
+           - (percentage      ? 5                           : 0)
+           - (elapsed         ? elapsed_time.length () + 1  : 0)
+           - (estimate        ? estimate_time.length () + 1 : 0);
 
   if (bar < 1)
     throw std::string ("The specified width is insufficient.");
@@ -186,7 +186,7 @@ void Progress::renderStyleMono () const
   double fraction = (1.0 * (_current - minimum)) / (maximum - minimum);
 
   // Elapsed time.
-  time_t now = time (nullptr);
+  auto now = time (nullptr);
   std::string elapsed_time;
   if (elapsed && start != 0)
     elapsed_time = formatTime (now - start);
@@ -202,11 +202,11 @@ void Progress::renderStyleMono () const
   }
 
   // Calculate bar width.
-  int bar = width
-          - (label.length () ? label.length () + 1         : 0)
-          - (percentage      ? 5                           : 0)
-          - (elapsed         ? elapsed_time.length () + 1  : 0)
-          - (estimate        ? estimate_time.length () + 1 : 0);
+  auto bar = width
+           - (label.length () ? label.length () + 1         : 0)
+           - (percentage      ? 5                           : 0)
+           - (elapsed         ? elapsed_time.length () + 1  : 0)
+           - (estimate        ? estimate_time.length () + 1 : 0);
 
   if (bar < 1)
     throw std::string ("The specified width is insufficient.");
@@ -268,7 +268,7 @@ void Progress::renderStyleText () const
   double fraction = (1.0 * (_current - minimum)) / (maximum - minimum);
 
   // Elapsed time.
-  time_t now = time (nullptr);
+  auto now = time (nullptr);
   std::string elapsed_time;
   if (elapsed && start != 0)
     elapsed_time = formatTime (now - start);
@@ -284,12 +284,12 @@ void Progress::renderStyleText () const
   }
 
   // Calculate bar width.
-  int bar = width
-          - 2                                                    // The [ and ]
-          - (label.length () ? label.length () + 1         : 0)
-          - (percentage      ? 5                           : 0)
-          - (elapsed         ? elapsed_time.length () + 1  : 0)
-          - (estimate        ? estimate_time.length () + 1 : 0);
+  auto bar = width
+           - 2                                                    // The [ and ]
+           - (label.length () ? label.length () + 1         : 0)
+           - (percentage      ? 5                           : 0)
+           - (elapsed         ? elapsed_time.length () + 1  : 0)
+           - (estimate        ? estimate_time.length () + 1 : 0);
 
   if (bar < 1)
     throw std::string ("The specified width is insufficient.");
