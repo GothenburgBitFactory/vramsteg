@@ -66,7 +66,7 @@ void showUsage ()
             << "  (default)     label \033[42m        \033[41m            \033[0m 40%\n"
             << "  mono          label \033[47m    \033[40m                \033[0m 20%\n"
             << "  text          label [************      ] 60%\n"
-            << std::endl;
+            << "\n";
 
   exit (0);
 }
@@ -83,8 +83,8 @@ void showVersion ()
             << "which may be found in the taskwarrior source kit.\n"
             << "\n"
             << "Documentation for vramsteg can be found using 'man vramsteg', or "
-            << "at http://tasktools.org.\n\n"
-            << std::flush;
+            << "at http://tasktools.org.\n"
+            << "\n";
 
   exit (0);
 }
