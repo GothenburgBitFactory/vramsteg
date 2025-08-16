@@ -76,14 +76,14 @@ void showVersion ()
 {
   std::cout << "\n"
             << "\033[1m" << PACKAGE_STRING << "\033[0m\n"
-            << "Copyright (C) 2010 - 2017, Göteborg Bit Factory\n"
+            << "Copyright (C) 2010 - 2017, Gothenburg Bit Factory\n"
             << "Copyright (C) 2010 - 2017, P. Beckingham, F. Hernandez.\n"
             << "\n"
             << "Vramsteg may be copied only under the terms of the MIT license, "
             << "which may be found in the taskwarrior source kit.\n"
             << "\n"
             << "Documentation for vramsteg can be found using 'man vramsteg', or "
-            << "at http://tasktools.org.\n"
+            << "at https://gotenburgbitfactory.org/vramsteg.\n"
             << "\n";
 
   exit (0);

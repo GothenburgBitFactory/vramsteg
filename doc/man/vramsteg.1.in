@@ -180,7 +180,7 @@ command line arguments for some features.
 
 .SH "CREDITS & COPYRIGHTS"
 Copyright (C) 2010 \- 2017 P. Beckingham, F. Hernandez
-Copyright (C) 2010 \- 2017 Göteborg Bit Factory
+Copyright (C) 2010 \- 2017 Gothenburg Bit Factory
 .br
 Vramsteg is distributed under the MIT license. See
 http://www.opensource.org/licenses/mit-license.php for more information.
@@ -190,17 +190,16 @@ For more information regarding vramsteg, the following may be referenced:
 
 .TP
 The official site at
-<http://tasktools.org>
+<http://gothenburgbitfactory.org/vramsteg/>
 
 .TP
 The official code repository at
-<https://git.tasktools.org/scm/ut/vramsteg.git>
+<https://github.com/GothenburgBitFactory/vramsteg>
 
 .TP
 You can contact the project by writing an email to
-<support@yootabory.com>
+<support@gothenburgbitfactory.org>
 
 .SH REPORTING BUGS
 .TP
-Bugs in vramsteg may be reported to <support@yootabory.com>
-
+Bugs in vramsteg may be reported to <https://github.com/GothenburgBitFactory/vramsteg/issues>
