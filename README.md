@@ -1,0 +1,11 @@
+# Vramsteg
+
+>('progress' in Svenska, almost)
+
+Vramsteg is an open source, command line utility that provides shell scripts with a full-featured progress indicator.
+The progress bar can display elapsed time, remaining time estimate, percentage completed, and labels.
+The progress bar can have user-specified colors, and be rendered in multiple styles.
+
+See the man page (enter 'man vramsteg') for full details on how to use vramsteg or look in the examples directory for several shell scripts that illustrate usage.
+
+Check for updates at https://github.com/GothenburgBitFactory/vramsteg.
